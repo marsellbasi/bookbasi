@@ -2,7 +2,7 @@
 
 Book BASI is BASI's mobile-first services and conversion website. BASI means foundation; the brand position is **The Foundation of Presence**.
 
-This repository contains the V1.2 one-page conversion foundation: a single commercial experience at `/`, a mobile-first service chooser, compact service details, conditional selected work and social proof, published-content reads from Sanity, a dedicated Sanity Studio configuration, SEO fundamentals, and Cloudflare Pages build readiness. Final copy, selected photography, production booking software, analytics, legal language, redirects, and launch work are intentionally deferred.
+This repository contains the V1.4 one-page destination hub: a fast mobile-first service chooser that routes visitors to the canonical EverythingBASI service experience, plus conditional selected work, concise trust content, published-content reads from Sanity, SEO fundamentals, and Cloudflare Pages build readiness. Selected photography, production booking software, analytics, legal review, redirects, and launch work are intentionally deferred.
 
 ## Architecture
 
@@ -12,7 +12,7 @@ This repository contains the V1.2 one-page conversion foundation: a single comme
 - **Styling:** one project-level, mobile-first CSS foundation with semantic design tokens
 - **Deployment target:** Cloudflare Pages using the generated `dist/` directory
 - **Runtime:** no frontend framework hydration and no required client-side JavaScript
-- **Commercial model:** one-page service discovery through `#events`, `#headshots`, `#branding`, `#portraits`, `#work`, and `#contact` anchors
+- **Commercial model:** five homepage chapters using `#services`, `#work`, `#why-basi`, and `#contact`; service choices are ordinary CMS-managed links to EverythingBASI
 
 Published Sanity content is fetched at build time. Restrained local fallback content allows a clean first build before the corresponding documents are published. Once documents exist, published CMS values replace the fallbacks. A Sanity build hook can be configured in a later launch phase so publishing content triggers a new static deployment.
 
@@ -89,11 +89,11 @@ Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs 
    - `studio-portraits`
    - `outdoor-portraits`
 4. Add active Link / Action documents in display order.
-5. Add a small, curated set of accessible images to **Home Page → Selected portfolio imagery** when approved work is ready. Every published image requires factual alt text and supports an authored crop, hotspot, category, display priority, and optional orientation hint.
+5. Add four to six accessible images to **Home Page → Selected portfolio imagery** when approved work is ready. Every published image requires factual alt text and supports an authored crop, hotspot, category, display priority, and optional orientation hint.
 6. Publish reviewed content.
 7. Run `npm run build` to regenerate the static site. Configure a Sanity-to-Cloudflare build hook only during the launch phase.
 
-Site Settings owns the default booking destination used by the homepage hero, final CTA, header, and contact region. Individual Service documents can override that destination for inquiry-led or directly bookable offers, while the site-wide fallback keeps future booking-provider changes centralized.
+Link / Action documents own the homepage routing destinations. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination.
 
 ## Cloudflare Pages
 

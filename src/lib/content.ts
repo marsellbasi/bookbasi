@@ -27,7 +27,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     primaryCta: {
       ...fallbackSettings.primaryCta,
       ...value.primaryCta,
-      destination: bookingDestination,
+      destination: normalizeDestination(value.primaryCta?.destination || fallbackSettings.primaryCta.destination),
     },
   }
 }
@@ -39,6 +39,7 @@ export async function getHomePage(): Promise<HomePage> {
     ...value,
     primaryCta: {...fallbackHome.primaryCta, ...value.primaryCta, destination: normalizeDestination(value.primaryCta?.destination || fallbackHome.primaryCta.destination)},
     secondaryCta: {...fallbackHome.secondaryCta, ...value.secondaryCta, destination: normalizeDestination(value.secondaryCta?.destination || fallbackHome.secondaryCta.destination)},
+    closingCta: {...fallbackHome.closingCta, ...value.closingCta, destination: normalizeDestination(value.closingCta?.destination || fallbackHome.closingCta.destination)},
     heroImage: value.heroImage?.url && value.heroImage.alt ? value.heroImage : undefined,
     showWork: value.showWork ?? fallbackHome.showWork,
     showTrust: value.showTrust ?? fallbackHome.showTrust,
@@ -51,7 +52,7 @@ export async function getHomePage(): Promise<HomePage> {
     selectedWork: (value.selectedWork || [])
       .filter((image) => image.url && image.width && image.height && image.alt)
       .sort((a, b) => (a.displayOrder ?? 100) - (b.displayOrder ?? 100))
-      .slice(0, 9),
+      .slice(0, 6),
   }
 }
 

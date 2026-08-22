@@ -3,24 +3,19 @@ import ActionList from '@/components/ActionList.astro'
 import CTASection from '@/components/CTASection.astro'
 import FeaturedWork from '@/components/FeaturedWork.astro'
 import Hero from '@/components/Hero.astro'
-import SectionHeading from '@/components/SectionHeading.astro'
-import ServiceCard from '@/components/ServiceCard.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import {getActions, getHomePage, getServices, getSiteSettings, getTestimonials} from '@/lib/content'
+import {getActions, getHomePage, getSiteSettings, getTestimonials} from '@/lib/content'
 
-const [home, actions, services, settings, testimonials] = await Promise.all([
+const [home, actions, settings, testimonials] = await Promise.all([
   getHomePage(),
   getActions(),
-  getServices(),
   getSiteSettings(),
   getTestimonials(),
 ])
 
-const eventService = services.find((service) => service.slug === 'event-coverage')
-const headshotService = services.find((service) => service.slug === 'team-headshots')
-const brandingService = services.find((service) => service.slug === 'personal-branding')
-const portraitServices = services.filter((service) => ['studio-portraits', 'outdoor-portraits'].includes(service.slug))
-const primaryCta = {...home.primaryCta, destination: settings.bookingDestination, label: settings.primaryCta.label}
+const primaryCta = home.primaryCta
+const portfolioAction = actions.find((action) => action._id === 'action.view-work' || action.title === 'View Work')
+const contactAction = actions.find((action) => action._id === 'action.contact-basi' || action.title === 'Contact BASI')
 const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
 ---
 
@@ -42,40 +37,13 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
 
   <ActionList {actions} eyebrow={home.chooserEyebrow} heading={home.chooserHeading} />
 
-  <section class="section service-details" id="services" aria-labelledby="services-title">
-    <div class="container">
-      <SectionHeading
-        eyebrow={home.servicesEyebrow}
-        title={home.servicesHeading}
-        copy={home.introduction}
-        id="services-title"
-      />
-      <div class="service-detail-grid">
-        {eventService && <ServiceCard service={eventService} id="events" tier="primary" bookingDestination={settings.bookingDestination} />}
-        {headshotService && <ServiceCard service={headshotService} id="headshots" tier="secondary" bookingDestination={settings.bookingDestination} />}
-        {brandingService && <ServiceCard service={brandingService} id="branding" bookingDestination={settings.bookingDestination} />}
-        {portraitServices.length > 0 && (
-          <section class="portrait-card" id="portraits" aria-labelledby="portraits-title">
-            <div class="portrait-card-heading">
-              <p class="service-category">Portraits</p>
-              <h3 id="portraits-title">Portrait Sessions</h3>
-              <p>Studio and outdoor options built around how you want to show up.</p>
-            </div>
-            <div class="portrait-options">
-              {portraitServices.map((service) => <ServiceCard {service} bookingDestination={settings.bookingDestination} compact />)}
-            </div>
-          </section>
-        )}
-      </div>
-    </div>
-  </section>
-
   {home.showWork && (
     <FeaturedWork
       heading={home.workHeading}
       copy={home.workCopy}
       images={home.selectedWork}
       instagramUrl={settings.instagramUrl}
+      portfolioUrl={portfolioAction?.url || 'https://everythingbasi.com/portfolio/'}
     />
   )}
 
@@ -86,11 +54,7 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
           <div>
             <p class="eyebrow">BASI means foundation</p>
             <h2 id="value-title">{home.presenceStatement}</h2>
-          </div>
-          <div class="value-process">
-            <p class="eyebrow">Why BASI</p>
-            <h3>{home.trustHeading}</h3>
-            <p>{home.trustCopy}</p>
+            <p class="value-support">{home.trustCopy}</p>
           </div>
         </div>
         <div class="value-grid">
@@ -120,10 +84,10 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
   <CTASection
     heading={home.closingHeading}
     copy={home.closingCopy}
-    label={settings.primaryCta.label}
-    destination={settings.bookingDestination}
-    contactHeading={home.contactHeading}
-    contactCopy={home.contactCopy}
+    label={home.closingCta.label}
+    destination={home.closingCta.destination}
+    secondaryLabel={contactAction?.title || 'Contact BASI'}
+    secondaryDestination={contactAction?.url || 'https://everythingbasi.com/contact/'}
     {settings}
   />
 </BaseLayout>

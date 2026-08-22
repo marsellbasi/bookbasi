@@ -6,12 +6,12 @@ interface Props {
   copy: string
   label: string
   destination: string
+  secondaryLabel: string
+  secondaryDestination: string
   settings: SiteSettings
-  contactHeading: string
-  contactCopy: string
 }
 
-const {heading, copy, label, destination, settings, contactHeading, contactCopy} = Astro.props
+const {heading, copy, label, destination, secondaryLabel, secondaryDestination, settings} = Astro.props
 ---
 
 <section class="cta-section section-gold" id="contact" aria-labelledby="cta-title">
@@ -22,18 +22,15 @@ const {heading, copy, label, destination, settings, contactHeading, contactCopy}
         <h2 id="cta-title">{heading}</h2>
         <p>{copy}</p>
       </div>
-      <a class="button button-dark" href={destination}>{label}</a>
+      <div class="cta-actions">
+        <a class="button button-dark" href={destination}>{label}</a>
+        <a class="button button-outline-dark" href={secondaryDestination} data-action="contact-basi">{secondaryLabel}</a>
+      </div>
     </div>
-    <div class="conversion-contact">
-      <div>
-        <h3>{contactHeading}</h3>
-        <p>{contactCopy}</p>
-      </div>
-      <div class="conversion-meta" aria-label="BASI contact details">
-        <a href={`mailto:${settings.email}`}>{settings.email}</a>
-        {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener">@book.basi</a>}
-        {settings.serviceArea && <span>{settings.serviceArea}</span>}
-      </div>
+    <div class="conversion-meta" aria-label="BASI contact details">
+      <a href={`mailto:${settings.email}`}>{settings.email}</a>
+      {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener">@book.basi</a>}
+      {settings.serviceArea && <span>{settings.serviceArea}</span>}
     </div>
   </div>
 </section>

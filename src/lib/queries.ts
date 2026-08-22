@@ -58,6 +58,7 @@ export const homeQuery = `*[_type == "homePage"][0]{
   },
   closingHeading,
   closingCopy,
+  "closingCta": closingCta{label, destination},
   contactHeading,
   contactCopy,
   "seoTitle": seo.title,

@@ -42,6 +42,7 @@ export interface HomePage {
   selectedWork: WorkImage[]
   closingHeading: string
   closingCopy: string
+  closingCta: CTA
   contactHeading: string
   contactCopy: string
   seoTitle?: string

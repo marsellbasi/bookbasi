@@ -7,7 +7,11 @@ interface Props {
 }
 
 const {settings} = Astro.props
-const bookingHref = settings.bookingDestination.startsWith('#') ? `/${settings.bookingDestination}` : settings.bookingDestination
+const onHomePage = Astro.url.pathname === '/'
+const bookingDestination = settings.primaryCta.destination
+const bookingHref = bookingDestination.startsWith('#') && !onHomePage ? `/${bookingDestination}` : bookingDestination
+const servicesHref = onHomePage ? '#services' : '/#services'
+const workHref = onHomePage ? '#work' : '/#work'
 ---
 
 <header class="site-header">
@@ -17,9 +21,8 @@ const bookingHref = settings.bookingDestination.startsWith('#') ? `/${settings.b
       <span>Book BASI</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="/#services">Services</a>
-      <a href="/#work">Work</a>
-      <a href="/#contact">Contact</a>
+      <a href={servicesHref}>Services</a>
+      <a href={workHref}>Work</a>
       <a class="nav-cta" href={bookingHref}>{settings.primaryCta.label}</a>
     </nav>
   </div>

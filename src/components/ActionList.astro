@@ -10,12 +10,11 @@ interface Props {
 }
 
 const {actions, eyebrow, heading} = Astro.props
-const serviceAnchors = new Set(['#events', '#headshots', '#branding', '#portraits'])
-const primaryActions = actions.filter((action) => serviceAnchors.has(action.url)).slice(0, 4)
-const utilityActions = actions.filter((action) => !serviceAnchors.has(action.url))
+const primaryActions = actions.filter((action) => action.variant !== 'quiet').slice(0, 4)
+const utilityActions = actions.filter((action) => action.variant === 'quiet')
 ---
 
-<section class="section quick-actions" aria-labelledby="quick-actions-title">
+<section class="section quick-actions" id="services" aria-labelledby="quick-actions-title">
   <div class="container">
     <SectionHeading {eyebrow} title={heading} id="quick-actions-title" />
     <div class="action-list action-list-primary">

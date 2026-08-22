@@ -8,17 +8,20 @@ interface Props {
 const {action} = Astro.props
 const isExternal = /^https?:\/\//.test(action.url)
 const isAnchor = action.url.startsWith('#')
+const opensNewTab = isExternal && !action.url.startsWith('https://everythingbasi.com/')
+const actionId = action._id.replace(/^(action\.|fallback-?)/, '')
 ---
 
 <a
   class:list={['action-link', `action-${action.variant}`]}
   href={action.url}
-  target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener' : undefined}
+  target={opensNewTab ? '_blank' : undefined}
+  rel={opensNewTab ? 'noopener' : undefined}
+  data-action={actionId}
 >
   <span>
     <strong>{action.title}</strong>
     {action.subtitle && <small>{action.subtitle}</small>}
   </span>
-  <span class="action-arrow" aria-hidden="true">{isExternal ? '↗' : isAnchor ? '↓' : '→'}</span>
+  <span class="action-arrow" aria-hidden="true">{opensNewTab ? '↗' : isAnchor ? '↓' : '→'}</span>
 </a>

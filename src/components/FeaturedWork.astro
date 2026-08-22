@@ -8,16 +8,20 @@ interface Props {
   copy: string
   images: WorkImage[]
   instagramUrl?: string
+  portfolioUrl: string
 }
 
-const {heading, copy, images, instagramUrl} = Astro.props
+const {heading, copy, images, instagramUrl, portfolioUrl} = Astro.props
 ---
 
 <section class:list={['section', 'work-section', 'section-dark', images.length === 0 && 'work-section-empty']} id="work" aria-labelledby="work-title">
   <div class="container">
     <div class="work-heading-row">
       <SectionHeading eyebrow="Featured work" title={heading} copy={copy} id="work-title" />
-      {images.length === 0 && instagramUrl && <a class="text-link work-instagram" href={instagramUrl} target="_blank" rel="noopener">View recent work on Instagram <span aria-hidden="true">↗</span></a>}
+      <div class="work-actions">
+        <a class="text-link work-portfolio" href={portfolioUrl} data-action="view-work">View Full Portfolio <span aria-hidden="true">→</span></a>
+        {images.length === 0 && instagramUrl && <a class="text-link work-instagram" href={instagramUrl} target="_blank" rel="noopener">View recent work on Instagram <span aria-hidden="true">↗</span></a>}
+      </div>
     </div>
     {images.length > 0 && (
       <div class="work-grid">

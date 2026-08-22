@@ -31,9 +31,14 @@ const structuredData = {
   email: settings.email,
   ...(settings.serviceArea ? {areaServed: settings.serviceArea} : {}),
   ...(settings.instagramUrl ? {sameAs: [settings.instagramUrl]} : {}),
-  makesOffer: ['Event Coverage', 'Team Headshots', 'Personal Branding', 'Studio Portraits', 'Outdoor Portraits'].map((name) => ({
+  makesOffer: [
+    ['Event Coverage', 'https://everythingbasi.com/events/'],
+    ['Team Headshots', 'https://everythingbasi.com/atlanta-business-headshots/'],
+    ['Personal Branding', 'https://everythingbasi.com/book/branding/'],
+    ['Portrait Sessions', 'https://everythingbasi.com/portraits/'],
+  ].map(([name, url]) => ({
     '@type': 'Offer',
-    itemOffered: {'@type': 'Service', name},
+    itemOffered: {'@type': 'Service', name, url},
   })),
 }
 ---
