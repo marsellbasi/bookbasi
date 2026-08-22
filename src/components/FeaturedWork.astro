@@ -1,0 +1,35 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro'
+import type {WorkImage} from '@/types/content'
+
+interface Props {
+  heading: string
+  copy: string
+  images: WorkImage[]
+}
+
+const {heading, copy, images} = Astro.props
+---
+
+<section class="section work-section section-dark" id="work" aria-labelledby="work-title">
+  <div class="container">
+    <SectionHeading eyebrow="Featured work" title={heading} copy={copy} id="work-title" />
+    {images.length > 0 && (
+      <div class="work-grid">
+        {images.map((image, index) => (
+          <figure class:list={['work-item', index === 0 && 'work-item-featured']}>
+            <img
+              src={image.url}
+              alt={image.alt || ''}
+              width={image.width}
+              height={image.height}
+              loading="lazy"
+              decoding="async"
+            />
+            {image.caption && <figcaption>{image.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

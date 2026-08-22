@@ -1,0 +1,24 @@
+---
+import type {LinkAction} from '@/types/content'
+
+interface Props {
+  action: LinkAction
+}
+
+const {action} = Astro.props
+const isExternal = /^https?:\/\//.test(action.url)
+const isAnchor = action.url.startsWith('#')
+---
+
+<a
+  class:list={['action-link', `action-${action.variant}`]}
+  href={action.url}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener' : undefined}
+>
+  <span>
+    <strong>{action.title}</strong>
+    {action.subtitle && <small>{action.subtitle}</small>}
+  </span>
+  <span class="action-arrow" aria-hidden="true">{isExternal ? '↗' : isAnchor ? '↓' : '→'}</span>
+</a>

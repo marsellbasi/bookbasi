@@ -1,0 +1,26 @@
+---
+import Logo from '@/components/Logo.astro'
+import type {SiteSettings} from '@/types/content'
+
+interface Props {
+  settings: SiteSettings
+}
+
+const {settings} = Astro.props
+const bookingHref = settings.bookingDestination.startsWith('#') ? `/${settings.bookingDestination}` : settings.bookingDestination
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand-link" href="/" aria-label="Book BASI home">
+      <Logo priority />
+      <span>Book BASI</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="/#services">Services</a>
+      <a href="/#work">Work</a>
+      <a href="/#contact">Contact</a>
+      <a class="nav-cta" href={bookingHref}>{settings.primaryCta.label}</a>
+    </nav>
+  </div>
+</header>

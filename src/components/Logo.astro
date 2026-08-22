@@ -1,0 +1,25 @@
+---
+import {Image} from 'astro:assets'
+import logoTransparent from '@/assets/brand/basi-logo-transparent.png'
+import logoBlack from '@/assets/brand/basi-logo-black-background.png'
+
+interface Props {
+  variant?: 'transparent' | 'black'
+  priority?: boolean
+}
+
+const {variant = 'transparent', priority = false} = Astro.props
+const source = variant === 'black' ? logoBlack : logoTransparent
+---
+
+<Image
+  src={source}
+  alt="BASI"
+  width={180}
+  height={180}
+  widths={[96, 144, 180, 240]}
+  sizes="(max-width: 480px) 72px, 88px"
+  loading={priority ? 'eager' : 'lazy'}
+  fetchpriority={priority ? 'high' : 'auto'}
+  class="logo-image"
+/>

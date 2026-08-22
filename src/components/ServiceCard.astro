@@ -1,0 +1,23 @@
+---
+import type {Service} from '@/types/content'
+
+interface Props {
+  service: Service
+  id?: string
+  tier?: 'primary' | 'secondary' | 'standard'
+}
+
+const {service, id, tier = 'standard'} = Astro.props
+---
+
+<article id={id} class:list={['service-card', `service-card-${tier}`]}>
+  <div class="service-number" aria-hidden="true">{String(service.displayOrder).padStart(2, '0')}</div>
+  <div>
+    <p class="service-category">{service.category}</p>
+    <h3>{service.shortTitle || service.title}</h3>
+    <p>{service.shortDescription}</p>
+  </div>
+  <a class="text-link" href="#contact" aria-label={`Contact BASI about ${service.title}`}>
+    Discuss this service <span aria-hidden="true">→</span>
+  </a>
+</article>

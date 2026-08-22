@@ -1,0 +1,11 @@
+node_modules/
+dist/
+studio/dist/
+.astro/
+.sanity/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+npm-debug.log*

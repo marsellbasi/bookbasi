@@ -1,0 +1,126 @@
+---
+import ActionList from '@/components/ActionList.astro'
+import ContactActions from '@/components/ContactActions.astro'
+import CTASection from '@/components/CTASection.astro'
+import FeaturedWork from '@/components/FeaturedWork.astro'
+import Hero from '@/components/Hero.astro'
+import SectionHeading from '@/components/SectionHeading.astro'
+import ServiceCard from '@/components/ServiceCard.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import {getActions, getHomePage, getServices, getSiteSettings, getTestimonials} from '@/lib/content'
+
+const [home, actions, services, settings, testimonials] = await Promise.all([
+  getHomePage(),
+  getActions(),
+  getServices(),
+  getSiteSettings(),
+  getTestimonials(),
+])
+
+const eventService = services.find((service) => service.slug === 'event-coverage')
+const headshotService = services.find((service) => service.slug === 'team-headshots')
+const brandingService = services.find((service) => service.slug === 'personal-branding')
+const portraitServices = services.filter((service) => ['studio-portraits', 'outdoor-portraits'].includes(service.slug))
+const primaryCta = {...home.primaryCta, destination: settings.bookingDestination}
+---
+
+<BaseLayout
+  title={home.seoTitle || settings.defaultSeoTitle}
+  description={home.seoDescription || settings.defaultSeoDescription}
+  canonical="/"
+>
+  <Hero
+    eyebrow={home.eyebrow}
+    headline={home.headline}
+    copy={home.supportingCopy}
+    primaryCta={primaryCta}
+    secondaryCta={home.secondaryCta}
+  />
+
+  <ActionList {actions} />
+
+  <section class="section services-section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Services"
+        title="Built around how you need to show up"
+        copy={home.introduction}
+        id="services-title"
+      />
+      <div class="service-stack">
+        {eventService && <ServiceCard service={eventService} id="events" tier="primary" />}
+        {headshotService && <ServiceCard service={headshotService} id="headshots" tier="secondary" />}
+        {brandingService && <ServiceCard service={brandingService} id="branding" />}
+        {portraitServices.length > 0 && (
+          <div class="portrait-group" id="portraits">
+            <div class="portrait-intro">
+              <p class="service-category">Portraits</p>
+              <h3>Portrait Sessions</h3>
+            </div>
+            <div class="portrait-grid">
+              {portraitServices.map((service) => <ServiceCard {service} />)}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {home.showWork && <FeaturedWork heading={home.workHeading} copy={home.workCopy} images={home.selectedWork} />}
+
+  <section class="section presence-section section-dark" aria-labelledby="presence-title">
+    <div class="container presence-grid">
+      <p class="eyebrow">BASI means foundation</p>
+      <h2 id="presence-title">{home.presenceStatement}</h2>
+    </div>
+  </section>
+
+  {home.showTrust && (
+    <section class="section trust-section" id="why-basi" aria-labelledby="trust-title">
+      <div class="container trust-grid">
+        <SectionHeading eyebrow="Why BASI" title={home.trustHeading} copy={home.trustCopy} id="trust-title" />
+        <div class="trust-points">
+          {home.trustPoints.map((point, index) => (
+            <div><span>{String(index + 1).padStart(2, '0')}</span><strong>{point}</strong></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {home.showTestimonials && testimonials.length > 0 && (
+    <section class="section section-muted" aria-labelledby="proof-title">
+      <div class="container container-narrow">
+        <SectionHeading eyebrow="Client perspective" title="Presence that carries forward" id="proof-title" />
+        <div class="testimonial-list">
+          {testimonials.map((item) => (
+            <figure>
+              <blockquote>“{item.quote}”</blockquote>
+              <figcaption>{item.name}{item.context && ` — ${item.context}`}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTASection
+    heading={home.closingHeading}
+    copy={home.closingCopy}
+    label={settings.primaryCta.label}
+    destination={settings.bookingDestination}
+  />
+
+  <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div>
+        <p class="eyebrow">Contact BASI</p>
+        <h2 id="contact-title">Start the conversation.</h2>
+        <p>Share the service, timing, and essential details for what you are planning.</p>
+        {settings.serviceArea && <p class="contact-area">Serving {settings.serviceArea}</p>}
+        <a class="button button-dark" href={settings.bookingDestination}>{settings.primaryCta.label}</a>
+      </div>
+      <ContactActions {settings} />
+    </div>
+  </section>
+</BaseLayout>

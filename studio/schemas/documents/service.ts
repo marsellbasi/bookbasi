@@ -1,0 +1,61 @@
+import {defineArrayMember, defineField, defineType} from 'sanity'
+
+export const serviceType = defineType({
+  name: 'service',
+  title: 'Service',
+  type: 'document',
+  groups: [
+    {name: 'content', title: 'Content', default: true},
+    {name: 'media', title: 'Media'},
+    {name: 'booking', title: 'Booking'},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({name: 'title', title: 'Title', type: 'string', group: 'content', validation: (rule) => rule.required().max(100)}),
+    defineField({name: 'slug', title: 'Slug', type: 'slug', group: 'content', options: {source: 'title', maxLength: 96}, validation: (rule) => rule.required()}),
+    defineField({name: 'shortTitle', title: 'Short title', type: 'string', group: 'content', validation: (rule) => rule.required().max(60)}),
+    defineField({name: 'shortDescription', title: 'Short description', type: 'text', rows: 3, group: 'content', validation: (rule) => rule.required().max(220)}),
+    defineField({
+      name: 'longDescription',
+      title: 'Long description',
+      type: 'array',
+      group: 'content',
+      of: [defineArrayMember({type: 'block', styles: [{title: 'Normal', value: 'normal'}, {title: 'Heading 2', value: 'h2'}, {title: 'Heading 3', value: 'h3'}]})],
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          {title: 'Events', value: 'events'},
+          {title: 'Business', value: 'business'},
+          {title: 'Branding', value: 'branding'},
+          {title: 'Portraits', value: 'portraits'},
+          {title: 'Video', value: 'video'},
+          {title: 'Content Production', value: 'content-production'},
+          {title: 'Creative Production', value: 'creative-production'},
+          {title: 'Campaigns', value: 'campaigns'},
+        ],
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({name: 'featuredImage', title: 'Featured image', type: 'imageWithAlt', group: 'media'}),
+    defineField({name: 'gallery', title: 'Gallery', type: 'array', group: 'media', of: [defineArrayMember({type: 'imageWithAlt'})]}),
+    defineField({name: 'pricingLabel', title: 'Starting price / pricing label', type: 'string', group: 'booking', description: 'Optional. Do not publish unreviewed policy or pricing.', validation: (rule) => rule.max(100)}),
+    defineField({name: 'duration', title: 'Duration', type: 'string', group: 'booking', validation: (rule) => rule.max(100)}),
+    defineField({name: 'deliverables', title: 'Deliverables', type: 'array', group: 'booking', of: [defineArrayMember({type: 'string'})]}),
+    defineField({name: 'bookingCtaLabel', title: 'Booking CTA label', type: 'string', group: 'booking', validation: (rule) => rule.max(60)}),
+    defineField({name: 'bookingUrl', title: 'Service-specific booking URL', type: 'string', group: 'booking', description: 'Optional override. Leave empty to use Site Settings.', validation: (rule) => rule.max(500)}),
+    defineField({name: 'featured', title: 'Featured', type: 'boolean', group: 'content', initialValue: false}),
+    defineField({name: 'displayOrder', title: 'Display order', type: 'number', group: 'content', validation: (rule) => rule.required().integer().min(0), initialValue: 100}),
+    defineField({name: 'seoTitle', title: 'SEO title', type: 'string', group: 'seo', validation: (rule) => rule.max(70).warning()}),
+    defineField({name: 'seoDescription', title: 'SEO description', type: 'text', rows: 3, group: 'seo', validation: (rule) => rule.max(170).warning()}),
+    defineField({name: 'active', title: 'Active', type: 'boolean', group: 'content', initialValue: true}),
+  ],
+  orderings: [{title: 'Display order', name: 'displayOrder', by: [{field: 'displayOrder', direction: 'asc'}]}],
+  preview: {
+    select: {title: 'title', subtitle: 'category', media: 'featuredImage'},
+  },
+})

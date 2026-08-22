@@ -1,0 +1,28 @@
+---
+import type {SiteSettings} from '@/types/content'
+
+interface Props {
+  settings: SiteSettings
+}
+
+const {settings} = Astro.props
+---
+
+<div class="contact-actions">
+  <a class="contact-action" href={`mailto:${settings.email}`}>
+    <span>Email</span>
+    <strong>{settings.email}</strong>
+  </a>
+  {settings.phone && (
+    <a class="contact-action" href={`tel:${settings.phone.replace(/[^+\d]/g, '')}`}>
+      <span>Phone</span>
+      <strong>{settings.phone}</strong>
+    </a>
+  )}
+  {settings.instagramUrl && (
+    <a class="contact-action" href={settings.instagramUrl} target="_blank" rel="noopener">
+      <span>Social</span>
+      <strong>@book.basi</strong>
+    </a>
+  )}
+</div>

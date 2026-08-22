@@ -1,0 +1,21 @@
+import {callToActionType} from './objects/callToAction'
+import {imageWithAltType} from './objects/imageWithAlt'
+import {seoType} from './objects/seo'
+import {faqType} from './documents/faq'
+import {homePageType} from './documents/homePage'
+import {linkActionType} from './documents/linkAction'
+import {serviceType} from './documents/service'
+import {siteSettingsType} from './documents/siteSettings'
+import {testimonialType} from './documents/testimonial'
+
+export const schemaTypes = [
+  callToActionType,
+  imageWithAltType,
+  seoType,
+  siteSettingsType,
+  homePageType,
+  serviceType,
+  linkActionType,
+  testimonialType,
+  faqType,
+]

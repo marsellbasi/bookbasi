@@ -1,0 +1,25 @@
+---
+import type {CTA} from '@/types/content'
+
+interface Props {
+  eyebrow: string
+  headline: string
+  copy: string
+  primaryCta: CTA
+  secondaryCta?: CTA
+}
+
+const {eyebrow, headline, copy, primaryCta, secondaryCta} = Astro.props
+---
+
+<section class="hero section-dark" aria-labelledby="hero-title">
+  <div class="container hero-inner">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 id="hero-title">{headline}</h1>
+    <p class="hero-copy">{copy}</p>
+    <div class="button-row">
+      <a class="button button-gold" href={primaryCta.destination}>{primaryCta.label}</a>
+      {secondaryCta && <a class="button button-outline-light" href={secondaryCta.destination}>{secondaryCta.label}</a>}
+    </div>
+  </div>
+</section>

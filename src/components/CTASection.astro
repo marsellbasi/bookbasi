@@ -1,0 +1,21 @@
+---
+interface Props {
+  heading: string
+  copy: string
+  label: string
+  destination: string
+}
+
+const {heading, copy, label, destination} = Astro.props
+---
+
+<section class="cta-section section-gold" aria-labelledby="cta-title">
+  <div class="container cta-inner">
+    <div>
+      <p class="eyebrow">Book BASI</p>
+      <h2 id="cta-title">{heading}</h2>
+      <p>{copy}</p>
+    </div>
+    <a class="button button-dark" href={destination}>{label}</a>
+  </div>
+</section>
