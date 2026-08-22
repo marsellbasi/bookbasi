@@ -24,6 +24,11 @@ export interface HomePage {
   supportingCopy: string
   primaryCta: CTA
   secondaryCta: CTA
+  heroImage?: WorkImage
+  chooserEyebrow: string
+  chooserHeading: string
+  servicesEyebrow: string
+  servicesHeading: string
   introduction: string
   presenceStatement: string
   trustHeading: string
@@ -37,6 +42,8 @@ export interface HomePage {
   selectedWork: WorkImage[]
   closingHeading: string
   closingCopy: string
+  contactHeading: string
+  contactCopy: string
   seoTitle?: string
   seoDescription?: string
 }
@@ -47,9 +54,15 @@ export interface TrustPoint {
 }
 
 export interface WorkImage {
+  asset?: {_ref: string}
   url: string
-  alt?: string
+  alt: string
   caption?: string
+  category?: 'events' | 'headshots' | 'branding' | 'portraits'
+  displayOrder?: number
+  orientationHint?: 'portrait' | 'landscape' | 'square'
+  crop?: {top: number; right: number; bottom: number; left: number}
+  hotspot?: {x: number; y: number; height: number; width: number}
   width: number
   height: number
 }

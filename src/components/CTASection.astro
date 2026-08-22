@@ -7,9 +7,11 @@ interface Props {
   label: string
   destination: string
   settings: SiteSettings
+  contactHeading: string
+  contactCopy: string
 }
 
-const {heading, copy, label, destination, settings} = Astro.props
+const {heading, copy, label, destination, settings, contactHeading, contactCopy} = Astro.props
 ---
 
 <section class="cta-section section-gold" id="contact" aria-labelledby="cta-title">
@@ -22,10 +24,16 @@ const {heading, copy, label, destination, settings} = Astro.props
       </div>
       <a class="button button-dark" href={destination}>{label}</a>
     </div>
-    <div class="conversion-meta" aria-label="BASI contact details">
-      <a href={`mailto:${settings.email}`}>{settings.email}</a>
-      {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener">@book.basi</a>}
-      {settings.serviceArea && <span>{settings.serviceArea}</span>}
+    <div class="conversion-contact">
+      <div>
+        <h3>{contactHeading}</h3>
+        <p>{contactCopy}</p>
+      </div>
+      <div class="conversion-meta" aria-label="BASI contact details">
+        <a href={`mailto:${settings.email}`}>{settings.email}</a>
+        {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener">@book.basi</a>}
+        {settings.serviceArea && <span>{settings.serviceArea}</span>}
+      </div>
     </div>
   </div>
 </section>

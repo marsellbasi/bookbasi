@@ -1,5 +1,7 @@
 ---
 import type {CTA} from '@/types/content'
+import {sanityImageUrl} from '@/lib/images'
+import type {WorkImage} from '@/types/content'
 
 interface Props {
   eyebrow: string
@@ -9,25 +11,39 @@ interface Props {
   secondaryCta?: CTA
   services?: string[]
   serviceArea?: string
+  image?: WorkImage
 }
 
-const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], serviceArea} = Astro.props
+const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], serviceArea, image} = Astro.props
 ---
 
-<section class="hero section-dark" aria-labelledby="hero-title">
+<section class:list={['hero', 'section-dark', image && 'hero-with-image']} aria-labelledby="hero-title">
   <div class="container hero-inner">
-    <p class="eyebrow">{eyebrow}</p>
-    <h1 id="hero-title">{headline}</h1>
-    <p class="hero-copy">{copy}</p>
-    {services.length > 0 && (
-      <ul class="hero-service-list" aria-label="Photography services">
-        {services.map((service) => <li>{service}</li>)}
-      </ul>
-    )}
-    <div class="button-row">
-      <a class="button button-gold" href={primaryCta.destination}>{primaryCta.label}</a>
-      {secondaryCta && <a class="button button-outline-light" href={secondaryCta.destination}>{secondaryCta.label}</a>}
+    <div class="hero-content">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 id="hero-title">{headline}</h1>
+      <p class="hero-copy">{copy}</p>
+      {services.length > 0 && <p class="hero-service-summary">{services.join(' · ')}</p>}
+      <div class="button-row">
+        <a class="button button-gold" href={primaryCta.destination}>{primaryCta.label}</a>
+        {secondaryCta && <a class="button button-outline-light" href={secondaryCta.destination}>{secondaryCta.label}</a>}
+      </div>
+      {serviceArea && <p class="hero-location">Serving {serviceArea}</p>}
     </div>
-    {serviceArea && <p class="hero-location">Serving {serviceArea}</p>}
+    {image && (
+      <figure class="hero-media">
+        <img
+          src={sanityImageUrl(image, 720, 900, 86)}
+          srcset={`${sanityImageUrl(image, 480, 600, 84)} 480w, ${sanityImageUrl(image, 720, 900, 86)} 720w, ${sanityImageUrl(image, 960, 1200, 86)} 960w`}
+          sizes="(max-width: 1023px) 100vw, 38vw"
+          alt={image.alt}
+          width="720"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
+    )}
   </div>
 </section>

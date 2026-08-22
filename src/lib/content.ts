@@ -39,6 +39,7 @@ export async function getHomePage(): Promise<HomePage> {
     ...value,
     primaryCta: {...fallbackHome.primaryCta, ...value.primaryCta, destination: normalizeDestination(value.primaryCta?.destination || fallbackHome.primaryCta.destination)},
     secondaryCta: {...fallbackHome.secondaryCta, ...value.secondaryCta, destination: normalizeDestination(value.secondaryCta?.destination || fallbackHome.secondaryCta.destination)},
+    heroImage: value.heroImage?.url && value.heroImage.alt ? value.heroImage : undefined,
     showWork: value.showWork ?? fallbackHome.showWork,
     showTrust: value.showTrust ?? fallbackHome.showTrust,
     showTestimonials: value.showTestimonials ?? fallbackHome.showTestimonials,
@@ -47,7 +48,10 @@ export async function getHomePage(): Promise<HomePage> {
       : fallbackHome.trustPoints,
     workHeading: value.workHeading || fallbackHome.workHeading,
     workCopy: value.workCopy || fallbackHome.workCopy,
-    selectedWork: (value.selectedWork || []).filter((image) => image.url && image.width && image.height),
+    selectedWork: (value.selectedWork || [])
+      .filter((image) => image.url && image.width && image.height && image.alt)
+      .sort((a, b) => (a.displayOrder ?? 100) - (b.displayOrder ?? 100))
+      .slice(0, 9),
   }
 }
 

@@ -19,6 +19,20 @@ export const homeQuery = `*[_type == "homePage"][0]{
   supportingCopy,
   "primaryCta": primaryCta{label, destination},
   "secondaryCta": secondaryCta{label, destination},
+  "heroImage": heroImage{
+    asset,
+    crop,
+    hotspot,
+    alt,
+    orientationHint,
+    "url": asset->url,
+    "width": asset->metadata.dimensions.width,
+    "height": asset->metadata.dimensions.height
+  },
+  chooserEyebrow,
+  chooserHeading,
+  servicesEyebrow,
+  servicesHeading,
   introduction,
   presenceStatement,
   trustHeading,
@@ -30,14 +44,22 @@ export const homeQuery = `*[_type == "homePage"][0]{
   workHeading,
   workCopy,
   "selectedWork": selectedWork[]{
+    asset,
+    crop,
+    hotspot,
     alt,
     caption,
+    category,
+    displayOrder,
+    orientationHint,
     "url": asset->url,
     "width": asset->metadata.dimensions.width,
     "height": asset->metadata.dimensions.height
   },
   closingHeading,
   closingCopy,
+  contactHeading,
+  contactCopy,
   "seoTitle": seo.title,
   "seoDescription": seo.description
 }`

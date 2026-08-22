@@ -21,7 +21,7 @@ const headshotService = services.find((service) => service.slug === 'team-headsh
 const brandingService = services.find((service) => service.slug === 'personal-branding')
 const portraitServices = services.filter((service) => ['studio-portraits', 'outdoor-portraits'].includes(service.slug))
 const primaryCta = {...home.primaryCta, destination: settings.bookingDestination, label: settings.primaryCta.label}
-const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', 'Portraits']
+const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
 ---
 
 <BaseLayout
@@ -37,15 +37,16 @@ const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', '
     secondaryCta={home.secondaryCta}
     services={serviceNames}
     serviceArea={settings.serviceArea}
+    image={home.heroImage}
   />
 
-  <ActionList {actions} />
+  <ActionList {actions} eyebrow={home.chooserEyebrow} heading={home.chooserHeading} />
 
   <section class="section service-details" id="services" aria-labelledby="services-title">
     <div class="container">
       <SectionHeading
-        eyebrow="The essentials"
-        title="Choose with confidence."
+        eyebrow={home.servicesEyebrow}
+        title={home.servicesHeading}
         copy={home.introduction}
         id="services-title"
       />
@@ -58,7 +59,7 @@ const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', '
             <div class="portrait-card-heading">
               <p class="service-category">Portraits</p>
               <h3 id="portraits-title">Portrait Sessions</h3>
-              <p>Choose a studio setting or an outdoor location.</p>
+              <p>Studio and outdoor options built around how you want to show up.</p>
             </div>
             <div class="portrait-options">
               {portraitServices.map((service) => <ServiceCard {service} bookingDestination={settings.bookingDestination} compact />)}
@@ -82,9 +83,15 @@ const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', '
     <section class="section value-section" id="why-basi" aria-labelledby="value-title">
       <div class="container">
         <div class="value-intro">
-          <p class="eyebrow">BASI means foundation</p>
-          <h2 id="value-title">{home.presenceStatement}</h2>
-          <p><strong>{home.trustHeading}</strong> {home.trustCopy}</p>
+          <div>
+            <p class="eyebrow">BASI means foundation</p>
+            <h2 id="value-title">{home.presenceStatement}</h2>
+          </div>
+          <div class="value-process">
+            <p class="eyebrow">Why BASI</p>
+            <h3>{home.trustHeading}</h3>
+            <p>{home.trustCopy}</p>
+          </div>
         </div>
         <div class="value-grid">
           {home.trustPoints.map((point, index) => (
@@ -115,6 +122,8 @@ const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', '
     copy={home.closingCopy}
     label={settings.primaryCta.label}
     destination={settings.bookingDestination}
+    contactHeading={home.contactHeading}
+    contactCopy={home.contactCopy}
     {settings}
   />
 </BaseLayout>

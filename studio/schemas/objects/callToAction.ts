@@ -14,7 +14,7 @@ export const callToActionType = defineType({
       validation: (rule) =>
         rule.required().custom((value) => {
           if (!value) return true
-          return /^(\/|https:\/\/|mailto:|tel:)/.test(value) || 'Use an internal path, HTTPS URL, email, or telephone link.'
+          return /^(#|\/|https:\/\/|mailto:|tel:)/.test(value) || 'Use a homepage anchor, internal path, HTTPS URL, email, or telephone link.'
         }),
     }),
   ],

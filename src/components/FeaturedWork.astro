@@ -1,5 +1,6 @@
 ---
 import SectionHeading from '@/components/SectionHeading.astro'
+import {sanityImageUrl, workImageRatio} from '@/lib/images'
 import type {WorkImage} from '@/types/content'
 
 interface Props {
@@ -10,15 +11,6 @@ interface Props {
 }
 
 const {heading, copy, images, instagramUrl} = Astro.props
-
-function imageUrl(url: string, width: number) {
-  const image = new URL(url)
-  image.searchParams.set('auto', 'format')
-  image.searchParams.set('fit', 'max')
-  image.searchParams.set('q', '82')
-  image.searchParams.set('w', String(width))
-  return image.toString()
-}
 ---
 
 <section class:list={['section', 'work-section', 'section-dark', images.length === 0 && 'work-section-empty']} id="work" aria-labelledby="work-title">
@@ -29,21 +21,25 @@ function imageUrl(url: string, width: number) {
     </div>
     {images.length > 0 && (
       <div class="work-grid">
-        {images.map((image, index) => (
-          <figure class:list={['work-item', index === 0 && 'work-item-featured']}>
-            <img
-              src={imageUrl(image.url, 960)}
-              srcset={`${imageUrl(image.url, 480)} 480w, ${imageUrl(image.url, 800)} 800w, ${imageUrl(image.url, 1200)} 1200w`}
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
-              alt={image.alt || ''}
-              width={image.width}
-              height={image.height}
-              loading="lazy"
-              decoding="async"
-            />
-            {image.caption && <figcaption>{image.caption}</figcaption>}
-          </figure>
-        ))}
+        {images.map((image, index) => {
+          const ratio = workImageRatio(image, index)
+          const imageHeight = (width: number) => Math.round(width * ratio.height / ratio.width)
+          return (
+            <figure class:list={['work-item', `work-item-${ratio.name}`, index === 0 && 'work-item-featured']}>
+              <img
+                src={sanityImageUrl(image, 960, imageHeight(960))}
+                srcset={`${sanityImageUrl(image, 480, imageHeight(480))} 480w, ${sanityImageUrl(image, 800, imageHeight(800))} 800w, ${sanityImageUrl(image, 1200, imageHeight(1200))} 1200w`}
+                sizes={index === 0 ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw' : '(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw'}
+                alt={image.alt}
+                width={ratio.width * 200}
+                height={ratio.height * 200}
+                loading="lazy"
+                decoding="async"
+              />
+              {image.caption && <figcaption>{image.caption}</figcaption>}
+            </figure>
+          )
+        })}
       </div>
     )}
   </div>

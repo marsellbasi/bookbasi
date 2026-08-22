@@ -41,6 +41,8 @@ npm run build
 npm run preview
 npm run studio:dev
 npm run studio:build
+npm run studio:validate
+npm run sanity:seed -- --dry-run
 ```
 
 `npm run studio:deploy` exists for a later, separately authorized Studio deployment. It is not part of the foundation task.
@@ -70,6 +72,12 @@ The Studio is separate because the public site is a static, low-JavaScript exper
 
 Before editors use the Studio, add only controlled origins that require authenticated requests in the Sanity project settings. Typical reviewed origins are the local Studio URL and the final deployed Studio URL.
 
+### Approved content seed
+
+`npm run sanity:seed` updates the approved production copy using deterministic IDs for Site Settings, Home Page, five Service documents, and seven Link / Action documents. It requires an authenticated Sanity CLI session and refuses to run against any project or dataset except `spjfohj1/production`.
+
+Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs update the same documents, preserve editor-managed media and unrelated fields, and never create testimonials or portfolio images.
+
 ### Content workflow
 
 1. Run `npm run studio:dev` and authenticate with an account that can access project `spjfohj1`.
@@ -81,7 +89,7 @@ Before editors use the Studio, add only controlled origins that require authenti
    - `studio-portraits`
    - `outdoor-portraits`
 4. Add active Link / Action documents in display order.
-5. Add a small, curated set of accessible images to **Home Page → Selected portfolio imagery** when approved work is ready.
+5. Add a small, curated set of accessible images to **Home Page → Selected portfolio imagery** when approved work is ready. Every published image requires factual alt text and supports an authored crop, hotspot, category, display priority, and optional orientation hint.
 6. Publish reviewed content.
 7. Run `npm run build` to regenerate the static site. Configure a Sanity-to-Cloudflare build hook only during the launch phase.
 

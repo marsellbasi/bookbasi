@@ -31,6 +31,10 @@ const structuredData = {
   email: settings.email,
   ...(settings.serviceArea ? {areaServed: settings.serviceArea} : {}),
   ...(settings.instagramUrl ? {sameAs: [settings.instagramUrl]} : {}),
+  makesOffer: ['Event Coverage', 'Team Headshots', 'Personal Branding', 'Studio Portraits', 'Outdoor Portraits'].map((name) => ({
+    '@type': 'Offer',
+    itemOffered: {'@type': 'Service', name},
+  })),
 }
 ---
 
