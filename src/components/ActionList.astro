@@ -8,13 +8,21 @@ interface Props {
 }
 
 const {actions} = Astro.props
+const serviceAnchors = new Set(['#events', '#headshots', '#branding', '#portraits'])
+const primaryActions = actions.filter((action) => serviceAnchors.has(action.url)).slice(0, 4)
+const utilityActions = actions.filter((action) => !serviceAnchors.has(action.url))
 ---
 
 <section class="section quick-actions" aria-labelledby="quick-actions-title">
-  <div class="container container-narrow">
-    <SectionHeading eyebrow="Start here" title="Choose your next step" id="quick-actions-title" />
-    <div class="action-list">
-      {actions.map((action) => <ActionLink action={action} />)}
+  <div class="container">
+    <SectionHeading eyebrow="Start here" title="What do you need?" id="quick-actions-title" />
+    <div class="action-list action-list-primary">
+      {primaryActions.map((action) => <ActionLink action={action} />)}
     </div>
+    {utilityActions.length > 0 && (
+      <div class="action-list-utility" aria-label="More ways to connect">
+        {utilityActions.map((action) => <ActionLink action={{...action, variant: 'quiet'}} />)}
+      </div>
+    )}
   </div>
 </section>

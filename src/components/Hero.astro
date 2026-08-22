@@ -7,9 +7,11 @@ interface Props {
   copy: string
   primaryCta: CTA
   secondaryCta?: CTA
+  services?: string[]
+  serviceArea?: string
 }
 
-const {eyebrow, headline, copy, primaryCta, secondaryCta} = Astro.props
+const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], serviceArea} = Astro.props
 ---
 
 <section class="hero section-dark" aria-labelledby="hero-title">
@@ -17,9 +19,15 @@ const {eyebrow, headline, copy, primaryCta, secondaryCta} = Astro.props
     <p class="eyebrow">{eyebrow}</p>
     <h1 id="hero-title">{headline}</h1>
     <p class="hero-copy">{copy}</p>
+    {services.length > 0 && (
+      <ul class="hero-service-list" aria-label="Photography services">
+        {services.map((service) => <li>{service}</li>)}
+      </ul>
+    )}
     <div class="button-row">
       <a class="button button-gold" href={primaryCta.destination}>{primaryCta.label}</a>
       {secondaryCta && <a class="button button-outline-light" href={secondaryCta.destination}>{secondaryCta.label}</a>}
     </div>
+    {serviceArea && <p class="hero-location">Serving {serviceArea}</p>}
   </div>
 </section>

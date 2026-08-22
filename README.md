@@ -2,7 +2,7 @@
 
 Book BASI is BASI's mobile-first services and conversion website. BASI means foundation; the brand position is **The Foundation of Presence**.
 
-This repository contains the V1.1 one-page foundation: a single conversion-focused commercial experience at `/`, reusable Astro components, a restrained responsive visual system, published-content reads from Sanity, a dedicated Sanity Studio configuration, SEO fundamentals, and Cloudflare Pages build readiness. Final copy, selected photography, production booking software, analytics, legal language, redirects, and launch work are intentionally deferred.
+This repository contains the V1.2 one-page conversion foundation: a single commercial experience at `/`, a mobile-first service chooser, compact service details, conditional selected work and social proof, published-content reads from Sanity, a dedicated Sanity Studio configuration, SEO fundamentals, and Cloudflare Pages build readiness. Final copy, selected photography, production booking software, analytics, legal language, redirects, and launch work are intentionally deferred.
 
 ## Architecture
 
@@ -85,7 +85,7 @@ Before editors use the Studio, add only controlled origins that require authenti
 6. Publish reviewed content.
 7. Run `npm run build` to regenerate the static site. Configure a Sanity-to-Cloudflare build hook only during the launch phase.
 
-Site Settings owns the booking destination used by the homepage hero, final CTA, header, and contact region. This keeps future booking-provider changes centralized.
+Site Settings owns the default booking destination used by the homepage hero, final CTA, header, and contact region. Individual Service documents can override that destination for inquiry-led or directly bookable offers, while the site-wide fallback keeps future booking-provider changes centralized.
 
 ## Cloudflare Pages
 
@@ -133,8 +133,8 @@ The service, work, and contact experiences are homepage sections rather than sta
 
 Recommended follow-on work:
 
-1. Final UX writing and approved service details
-2. Photography selection, image crops, alt text, and visual refinement
+1. Populate and review the approved service and trust content in Sanity
+2. Select photography, define crops and alt text, and populate the curated work set
 3. Sanity content population and editorial QA
 4. Booking-provider selection and centralized destination update
 5. Reviewed legal policies and production SEO refinement

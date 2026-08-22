@@ -28,7 +28,7 @@ export interface HomePage {
   presenceStatement: string
   trustHeading: string
   trustCopy: string
-  trustPoints: string[]
+  trustPoints: TrustPoint[]
   showWork: boolean
   showTrust: boolean
   showTestimonials: boolean
@@ -39,6 +39,11 @@ export interface HomePage {
   closingCopy: string
   seoTitle?: string
   seoDescription?: string
+}
+
+export interface TrustPoint {
+  title: string
+  description: string
 }
 
 export interface WorkImage {

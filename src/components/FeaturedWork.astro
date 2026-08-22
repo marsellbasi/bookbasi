@@ -6,20 +6,35 @@ interface Props {
   heading: string
   copy: string
   images: WorkImage[]
+  instagramUrl?: string
 }
 
-const {heading, copy, images} = Astro.props
+const {heading, copy, images, instagramUrl} = Astro.props
+
+function imageUrl(url: string, width: number) {
+  const image = new URL(url)
+  image.searchParams.set('auto', 'format')
+  image.searchParams.set('fit', 'max')
+  image.searchParams.set('q', '82')
+  image.searchParams.set('w', String(width))
+  return image.toString()
+}
 ---
 
-<section class="section work-section section-dark" id="work" aria-labelledby="work-title">
+<section class:list={['section', 'work-section', 'section-dark', images.length === 0 && 'work-section-empty']} id="work" aria-labelledby="work-title">
   <div class="container">
-    <SectionHeading eyebrow="Featured work" title={heading} copy={copy} id="work-title" />
+    <div class="work-heading-row">
+      <SectionHeading eyebrow="Featured work" title={heading} copy={copy} id="work-title" />
+      {images.length === 0 && instagramUrl && <a class="text-link work-instagram" href={instagramUrl} target="_blank" rel="noopener">View recent work on Instagram <span aria-hidden="true">↗</span></a>}
+    </div>
     {images.length > 0 && (
       <div class="work-grid">
         {images.map((image, index) => (
           <figure class:list={['work-item', index === 0 && 'work-item-featured']}>
             <img
-              src={image.url}
+              src={imageUrl(image.url, 960)}
+              srcset={`${imageUrl(image.url, 480)} 480w, ${imageUrl(image.url, 800)} 800w, ${imageUrl(image.url, 1200)} 1200w`}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 33vw"
               alt={image.alt || ''}
               width={image.width}
               height={image.height}

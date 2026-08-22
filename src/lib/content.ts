@@ -42,7 +42,9 @@ export async function getHomePage(): Promise<HomePage> {
     showWork: value.showWork ?? fallbackHome.showWork,
     showTrust: value.showTrust ?? fallbackHome.showTrust,
     showTestimonials: value.showTestimonials ?? fallbackHome.showTestimonials,
-    trustPoints: value.trustPoints?.length ? value.trustPoints : fallbackHome.trustPoints,
+    trustPoints: value.trustPoints?.filter((point) => point?.title && point?.description).length
+      ? value.trustPoints.filter((point) => point?.title && point?.description)
+      : fallbackHome.trustPoints,
     workHeading: value.workHeading || fallbackHome.workHeading,
     workCopy: value.workCopy || fallbackHome.workCopy,
     selectedWork: (value.selectedWork || []).filter((image) => image.url && image.width && image.height),
@@ -54,7 +56,15 @@ export async function getServices(): Promise<Service[]> {
   if (published.length === 0) return fallbackServices
 
   const bySlug = new Map(fallbackServices.map((service) => [service.slug, service]))
-  for (const service of published) bySlug.set(service.slug, service)
+  for (const service of published) {
+    const fallback = bySlug.get(service.slug)
+    bySlug.set(service.slug, {
+      ...fallback,
+      ...service,
+      deliverables: service.deliverables?.length ? service.deliverables : fallback?.deliverables,
+      bookingCtaLabel: service.bookingCtaLabel || fallback?.bookingCtaLabel,
+    })
+  }
   return [...bySlug.values()].filter((service) => service.active).sort((a, b) => a.displayOrder - b.displayOrder)
 }
 

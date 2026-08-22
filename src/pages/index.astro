@@ -1,6 +1,5 @@
 ---
 import ActionList from '@/components/ActionList.astro'
-import ContactActions from '@/components/ContactActions.astro'
 import CTASection from '@/components/CTASection.astro'
 import FeaturedWork from '@/components/FeaturedWork.astro'
 import Hero from '@/components/Hero.astro'
@@ -21,7 +20,8 @@ const eventService = services.find((service) => service.slug === 'event-coverage
 const headshotService = services.find((service) => service.slug === 'team-headshots')
 const brandingService = services.find((service) => service.slug === 'personal-branding')
 const portraitServices = services.filter((service) => ['studio-portraits', 'outdoor-portraits'].includes(service.slug))
-const primaryCta = {...home.primaryCta, destination: settings.bookingDestination}
+const primaryCta = {...home.primaryCta, destination: settings.bookingDestination, label: settings.primaryCta.label}
+const serviceNames = ['Event Coverage', 'Team Headshots', 'Personal Branding', 'Portraits']
 ---
 
 <BaseLayout
@@ -35,71 +35,77 @@ const primaryCta = {...home.primaryCta, destination: settings.bookingDestination
     copy={home.supportingCopy}
     primaryCta={primaryCta}
     secondaryCta={home.secondaryCta}
+    services={serviceNames}
+    serviceArea={settings.serviceArea}
   />
 
   <ActionList {actions} />
 
-  <section class="section services-section" id="services" aria-labelledby="services-title">
+  <section class="section service-details" id="services" aria-labelledby="services-title">
     <div class="container">
       <SectionHeading
-        eyebrow="Services"
-        title="Built around how you need to show up"
+        eyebrow="The essentials"
+        title="Choose with confidence."
         copy={home.introduction}
         id="services-title"
       />
-      <div class="service-stack">
-        {eventService && <ServiceCard service={eventService} id="events" tier="primary" />}
-        {headshotService && <ServiceCard service={headshotService} id="headshots" tier="secondary" />}
-        {brandingService && <ServiceCard service={brandingService} id="branding" />}
+      <div class="service-detail-grid">
+        {eventService && <ServiceCard service={eventService} id="events" tier="primary" bookingDestination={settings.bookingDestination} />}
+        {headshotService && <ServiceCard service={headshotService} id="headshots" tier="secondary" bookingDestination={settings.bookingDestination} />}
+        {brandingService && <ServiceCard service={brandingService} id="branding" bookingDestination={settings.bookingDestination} />}
         {portraitServices.length > 0 && (
-          <div class="portrait-group" id="portraits">
-            <div class="portrait-intro">
+          <section class="portrait-card" id="portraits" aria-labelledby="portraits-title">
+            <div class="portrait-card-heading">
               <p class="service-category">Portraits</p>
-              <h3>Portrait Sessions</h3>
+              <h3 id="portraits-title">Portrait Sessions</h3>
+              <p>Choose a studio setting or an outdoor location.</p>
             </div>
-            <div class="portrait-grid">
-              {portraitServices.map((service) => <ServiceCard {service} />)}
+            <div class="portrait-options">
+              {portraitServices.map((service) => <ServiceCard {service} bookingDestination={settings.bookingDestination} compact />)}
             </div>
-          </div>
+          </section>
         )}
       </div>
     </div>
   </section>
 
-  {home.showWork && <FeaturedWork heading={home.workHeading} copy={home.workCopy} images={home.selectedWork} />}
-
-  <section class="section presence-section section-dark" aria-labelledby="presence-title">
-    <div class="container presence-grid">
-      <p class="eyebrow">BASI means foundation</p>
-      <h2 id="presence-title">{home.presenceStatement}</h2>
-    </div>
-  </section>
-
-  {home.showTrust && (
-    <section class="section trust-section" id="why-basi" aria-labelledby="trust-title">
-      <div class="container trust-grid">
-        <SectionHeading eyebrow="Why BASI" title={home.trustHeading} copy={home.trustCopy} id="trust-title" />
-        <div class="trust-points">
-          {home.trustPoints.map((point, index) => (
-            <div><span>{String(index + 1).padStart(2, '0')}</span><strong>{point}</strong></div>
-          ))}
-        </div>
-      </div>
-    </section>
+  {home.showWork && (
+    <FeaturedWork
+      heading={home.workHeading}
+      copy={home.workCopy}
+      images={home.selectedWork}
+      instagramUrl={settings.instagramUrl}
+    />
   )}
 
-  {home.showTestimonials && testimonials.length > 0 && (
-    <section class="section section-muted" aria-labelledby="proof-title">
-      <div class="container container-narrow">
-        <SectionHeading eyebrow="Client perspective" title="Presence that carries forward" id="proof-title" />
-        <div class="testimonial-list">
-          {testimonials.map((item) => (
-            <figure>
-              <blockquote>“{item.quote}”</blockquote>
-              <figcaption>{item.name}{item.context && ` — ${item.context}`}</figcaption>
-            </figure>
+  {home.showTrust && (
+    <section class="section value-section" id="why-basi" aria-labelledby="value-title">
+      <div class="container">
+        <div class="value-intro">
+          <p class="eyebrow">BASI means foundation</p>
+          <h2 id="value-title">{home.presenceStatement}</h2>
+          <p><strong>{home.trustHeading}</strong> {home.trustCopy}</p>
+        </div>
+        <div class="value-grid">
+          {home.trustPoints.map((point, index) => (
+            <article>
+              <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{point.title}</h3>
+              <p>{point.description}</p>
+            </article>
           ))}
         </div>
+        {home.showTestimonials && testimonials.length > 0 && (
+          <div class="testimonial-list value-testimonials" aria-labelledby="proof-title">
+            <h3 id="proof-title">Client perspective</h3>
+            {testimonials.map((item) => (
+              <figure>
+                <blockquote>“{item.quote}”</blockquote>
+                <figcaption>{item.name}{item.context && ` — ${item.context}`}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )}
@@ -109,18 +115,6 @@ const primaryCta = {...home.primaryCta, destination: settings.bookingDestination
     copy={home.closingCopy}
     label={settings.primaryCta.label}
     destination={settings.bookingDestination}
+    {settings}
   />
-
-  <section class="section contact-section" id="contact" aria-labelledby="contact-title">
-    <div class="container contact-grid">
-      <div>
-        <p class="eyebrow">Contact BASI</p>
-        <h2 id="contact-title">Start the conversation.</h2>
-        <p>Share the service, timing, and essential details for what you are planning.</p>
-        {settings.serviceArea && <p class="contact-area">Serving {settings.serviceArea}</p>}
-        <a class="button button-dark" href={settings.bookingDestination}>{settings.primaryCta.label}</a>
-      </div>
-      <ContactActions {settings} />
-    </div>
-  </section>
 </BaseLayout>

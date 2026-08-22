@@ -1,21 +1,31 @@
 ---
+import type {SiteSettings} from '@/types/content'
+
 interface Props {
   heading: string
   copy: string
   label: string
   destination: string
+  settings: SiteSettings
 }
 
-const {heading, copy, label, destination} = Astro.props
+const {heading, copy, label, destination, settings} = Astro.props
 ---
 
-<section class="cta-section section-gold" aria-labelledby="cta-title">
-  <div class="container cta-inner">
-    <div>
-      <p class="eyebrow">Book BASI</p>
-      <h2 id="cta-title">{heading}</h2>
-      <p>{copy}</p>
+<section class="cta-section section-gold" id="contact" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <p class="eyebrow">Book BASI</p>
+        <h2 id="cta-title">{heading}</h2>
+        <p>{copy}</p>
+      </div>
+      <a class="button button-dark" href={destination}>{label}</a>
     </div>
-    <a class="button button-dark" href={destination}>{label}</a>
+    <div class="conversion-meta" aria-label="BASI contact details">
+      <a href={`mailto:${settings.email}`}>{settings.email}</a>
+      {settings.instagramUrl && <a href={settings.instagramUrl} target="_blank" rel="noopener">@book.basi</a>}
+      {settings.serviceArea && <span>{settings.serviceArea}</span>}
+    </div>
   </div>
 </section>

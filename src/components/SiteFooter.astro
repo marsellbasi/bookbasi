@@ -11,21 +11,12 @@ const year = new Date().getFullYear()
 ---
 
 <footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <a class="footer-brand" href="/" aria-label="Book BASI home"><Logo /></a>
-      <p>{settings.footerText}</p>
-    </div>
-    <div class="footer-links" aria-label="Footer navigation">
-      <a href="/#services">Services</a>
-      <a href="/#work">Work</a>
-      <a href="/#contact">Contact</a>
-      {settings.instagramUrl && <a href={settings.instagramUrl} rel="me noopener" target="_blank">Instagram</a>}
-    </div>
+  <div class="container footer-inner">
+    <a class="footer-brand" href="/" aria-label="Book BASI home"><Logo /></a>
+    <p>{settings.footerText}</p>
     <div class="footer-meta">
-      <a href={`mailto:${settings.email}`}>{settings.email}</a>
-      {settings.serviceArea && <span>{settings.serviceArea}</span>}
-      <div><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></div>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
       <small>© {year} BASI</small>
     </div>
   </div>

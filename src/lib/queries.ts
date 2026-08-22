@@ -23,7 +23,7 @@ export const homeQuery = `*[_type == "homePage"][0]{
   presenceStatement,
   trustHeading,
   trustCopy,
-  trustPoints,
+  "trustPoints": trustPoints[]{title, description},
   showWork,
   showTrust,
   showTestimonials,
