@@ -390,6 +390,12 @@ h4 {
   gap: var(--space-2);
 }
 
+.action-list-primary .action-link {
+  min-height: 8.25rem;
+  gap: var(--space-2);
+  padding: 0.875rem var(--space-4);
+}
+
 .action-link {
   display: flex;
   min-height: 9rem;
@@ -422,11 +428,6 @@ h4 {
   background: var(--color-dark-soft);
 }
 
-.action-link[data-action="team-headshots"] {
-  border-top: 3px solid var(--color-gold-text);
-  background: var(--color-surface);
-}
-
 .action-copy,
 .action-copy strong,
 .action-copy small {
@@ -453,13 +454,12 @@ h4 {
 .action-cta {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.45rem;
   color: var(--color-gold-text);
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-size: 0.84rem;
+  font-weight: 760;
+  letter-spacing: 0.01em;
   line-height: 1.2;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -469,7 +469,7 @@ h4 {
 
 .action-arrow {
   flex: 0 0 auto;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   transition: transform 160ms ease;
 }
 
@@ -487,16 +487,27 @@ h4 {
 
 .action-list-utility .action-link {
   min-height: 3.25rem;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   padding: var(--space-2);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  background: transparent;
+}
+
+.action-list-utility .action-link:hover,
+.action-list-utility .action-link:focus-visible {
+  border-color: var(--color-gold-text);
+  color: var(--color-dark);
+  background: var(--color-surface);
 }
 
 .action-list-utility .action-link strong {
   font-size: 0.78rem;
-  letter-spacing: -0.01em;
+  font-weight: 720;
+  letter-spacing: 0.01em;
+  text-align: center;
 }
 
 .action-list-utility .action-link small,
