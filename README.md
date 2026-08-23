@@ -80,7 +80,7 @@ Sanity CORS should contain only the reviewed Studio origins: `http://localhost:3
 - Local Studio: `npm run studio:dev`
 - Sanity project/dataset: `spjfohj1` / `production`
 - Studio Pages project: `bookbasi-studio`, production branch `main`
-- Studio build: repository root, `npm run studio:build`, output `studio/dist`, Node 22
+- Studio build: repository root, `npm run studio:build`, output `studio/dist`, Node 22; the build also extracts the registered Studio manifest into `studio/dist/static`
 
 The Studio output intentionally has no top-level `404.html`; Cloudflare Pages therefore applies its native single-page-application fallback for direct Studio route refreshes.
 
