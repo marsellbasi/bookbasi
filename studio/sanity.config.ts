@@ -8,7 +8,7 @@ const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 export default defineConfig({
   name: 'book-basi',
-  title: 'Book BASI',
+  title: 'Book BASI Studio',
   projectId,
   dataset,
   plugins: [structureTool({structure})],

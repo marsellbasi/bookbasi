@@ -8,7 +8,7 @@ This repository contains the V1.5 one-page destination hub: a fast mobile-first 
 
 - **Frontend:** Astro 7 with strict TypeScript and static output
 - **Content:** Sanity project `spjfohj1`, dataset `production`, queried through `@sanity/astro`
-- **Studio:** dedicated configuration under `studio/`; it is not embedded in the public Astro bundle
+- **Studio:** dedicated configuration under `studio/`, deployed separately at `https://studio.bookbasi.com`; it is not embedded in the public Astro bundle
 - **Styling:** one project-level, mobile-first CSS foundation with semantic design tokens
 - **Deployment target:** Cloudflare Pages using the generated `dist/` directory
 - **Runtime:** no frontend framework hydration and no required client-side JavaScript
@@ -46,7 +46,7 @@ npm run sanity:seed -- --dry-run
 npm run sanity:publish-work -- --dry-run
 ```
 
-`npm run studio:deploy` exists for a later, separately authorized Studio deployment. It is not part of the foundation task.
+The production Studio is self-hosted on a dedicated Cloudflare Pages project. `npm run studio:deploy` remains available for Sanity-managed hosting and is not used by the production deployment.
 
 ## Environment variables
 
@@ -56,6 +56,7 @@ npm run sanity:publish-work -- --dry-run
 | `PUBLIC_SANITY_DATASET` | Public | Recommended | Published dataset; defaults to `production` |
 | `SANITY_STUDIO_PROJECT_ID` | Studio build | Recommended | Studio project ID; defaults to `spjfohj1` |
 | `SANITY_STUDIO_DATASET` | Studio build | Recommended | Studio dataset; defaults to `production` |
+| `SANITY_STUDIO_HOST` | Studio CLI | Optional | External production Studio URL; defaults to `https://studio.bookbasi.com` |
 | `SANITY_API_READ_TOKEN` | Secret/server only | Only for a private dataset | Optional future authenticated read token; never prefix with `PUBLIC_` |
 
 Do not commit `.env`, Sanity tokens, deployment tokens, or other secrets. The current frontend reads published content and does not use a write token.
@@ -69,9 +70,21 @@ The dedicated Studio is configured by:
 - `studio/structure.ts`
 - `studio/schemas/`
 
-The Studio is separate because the public site is a static, low-JavaScript experience. Embedding Studio at `/admin` would add React/Studio concerns to the Astro application and couple the editing surface to the public Cloudflare Pages deployment. A dedicated Studio can be developed locally and later deployed to Sanity's managed Studio hosting after review.
+The Studio is separate because the public site is a static, low-JavaScript experience. Embedding Studio at `/admin` would add React/Studio concerns to the Astro application and couple the editing surface to the public Cloudflare Pages deployment. The production Studio is self-hosted as a separate Cloudflare Pages application at `https://studio.bookbasi.com`.
 
-Before editors use the Studio, add only controlled origins that require authenticated requests in the Sanity project settings. Typical reviewed origins are the local Studio URL and the final deployed Studio URL.
+Sanity CORS should contain only the reviewed Studio origins: `http://localhost:3333` for local development and `https://studio.bookbasi.com` for production, both with credentials support where required. The public static frontend does not need browser CORS access.
+
+### CMS access and deployment
+
+- Production Studio: `https://studio.bookbasi.com`
+- Local Studio: `npm run studio:dev`
+- Sanity project/dataset: `spjfohj1` / `production`
+- Studio Pages project: `bookbasi-studio`, production branch `main`
+- Studio build: repository root, `npm run studio:build`, output `studio/dist`, Node 22
+
+Publishing follows: Studio publish → Sanity `production` → the existing production webhook → the public `bookbasi` Cloudflare Pages rebuild → `https://bookbasi.com`.
+
+For Studio deployment failures, inspect the `bookbasi-studio` Pages build logs. For authentication or API failures, verify the exact production Studio origin in Sanity CORS. For public content delays, inspect the Sanity webhook delivery history and the public `bookbasi` Pages deployment logs. Deploy-hook URLs and credentials must never be stored in the repository.
 
 ### Approved content seed
 
@@ -150,9 +163,9 @@ As audited on 2026-08-23, `bookbasi.com` still uses Namecheap BasicDNS nameserve
 3. In the `bookbasi` Pages project, add `bookbasi.com` through **Custom domains** before relying on its DNS record, then confirm certificate issuance and HTTPS.
 4. Add `www.bookbasi.com` and configure a permanent host redirect to `https://bookbasi.com`, preserving paths and query strings.
 5. After both custom hosts are verified, permanently redirect `bookbasi.pages.dev` to the apex canonical host to avoid a duplicate public origin.
-6. Add a reviewed Sanity deploy hook that triggers the Cloudflare Pages build hook. There are currently no Sanity webhooks, so published CMS updates otherwise require a Git deployment or manual rebuild.
+6. The reviewed Sanity production webhook triggers the public `bookbasi` Cloudflare Pages deploy hook after qualifying published content changes.
 
-The static frontend does not need browser CORS access to Sanity. The current Sanity allowlist contains only `http://localhost:3333`; add only the exact HTTPS origin chosen for a future separately deployed Studio. A suitable Studio hostname is `https://studio.bookbasi.com` or Sanity-managed Studio hosting, kept separate from the public Pages bundle.
+The static frontend does not need browser CORS access to Sanity. Keep the CORS allowlist limited to the local Studio and the exact production Studio origin.
 
 ## Future phases
 
@@ -160,8 +173,6 @@ Recommended follow-on work:
 
 1. Review the approved image-backed Cloudflare deployment
 2. Activate the apex and `www` domain flow after explicit authorization
-3. Configure the reviewed Sanity-to-Cloudflare build hook
-4. Deploy the separate Sanity Studio when an editing URL is approved
-5. Complete legal review, analytics decisions, and post-launch monitoring
+3. Complete legal review, analytics decisions, and post-launch monitoring
 
-No production deployment or domain configuration is performed by this repository scaffold.
+The public site and Studio remain operationally isolated Cloudflare Pages projects connected to the same repository and production Sanity dataset.
