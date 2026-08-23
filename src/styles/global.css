@@ -54,7 +54,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 20rem;
+  min-width: 0;
   overflow-x: clip;
   background: var(--color-bg);
   color: var(--color-text);
@@ -394,6 +394,7 @@ h4 {
   min-height: 8.25rem;
   gap: var(--space-2);
   padding: 0.875rem var(--space-4);
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
 }
 
 .action-link {
@@ -426,6 +427,21 @@ h4 {
 .action-primary:focus-visible {
   border-color: var(--color-gold);
   background: var(--color-dark-soft);
+}
+
+@media (hover: hover) {
+  .action-list-primary .action-link:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.action-list-primary .action-link:focus-visible {
+  transform: translateY(-2px);
+}
+
+.action-list-primary .action-link:active {
+  transform: translateY(1px);
+  transition-duration: 90ms;
 }
 
 .action-copy,
@@ -479,40 +495,57 @@ h4 {
 }
 
 .action-list-utility {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin-top: var(--space-3);
-  gap: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  gap: 0 var(--space-4);
 }
 
 .action-list-utility .action-link {
-  min-height: 3.25rem;
+  min-height: 2.75rem;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  padding: var(--space-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  color: var(--color-muted);
+  justify-content: flex-start;
+  gap: 0.35rem;
+  padding: 0.35rem 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--color-dark);
   background: transparent;
 }
 
 .action-list-utility .action-link:hover,
 .action-list-utility .action-link:focus-visible {
-  border-color: var(--color-gold-text);
+  border-color: transparent;
   color: var(--color-dark);
-  background: var(--color-surface);
+  background: transparent;
+}
+
+.action-list-utility .action-link:hover strong,
+.action-list-utility .action-link:focus-visible strong {
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold-text);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.24em;
 }
 
 .action-list-utility .action-link strong {
   font-size: 0.78rem;
   font-weight: 720;
   letter-spacing: 0.01em;
-  text-align: center;
 }
 
-.action-list-utility .action-link small,
-.action-list-utility .action-arrow {
+.action-list-utility .action-link small {
   display: none;
+}
+
+.action-list-utility .action-arrow {
+  display: inline-block;
+  color: var(--color-gold-text);
+  font-size: 0.95rem;
 }
 
 .service-details {
@@ -676,6 +709,12 @@ h4 {
 
 .work-item-featured {
   grid-column: 1 / -1;
+}
+
+@media (max-width: 39.9375rem) {
+  .work-item:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 .work-item img {
@@ -927,7 +966,7 @@ h4 {
   }
 
   .action-list-utility .action-link {
-    min-width: 8rem;
+    min-width: auto;
   }
 
   .service-detail-grid {
@@ -1090,5 +1129,10 @@ h4 {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .action-list-primary .action-link,
+  .action-arrow {
+    transform: none !important;
   }
 }
