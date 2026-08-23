@@ -2,7 +2,7 @@
 
 Book BASI is BASI's mobile-first services and conversion website. BASI means foundation; the brand position is **The Foundation of Presence**.
 
-This repository contains the V1.4 one-page destination hub: a fast mobile-first service chooser that routes visitors to the canonical EverythingBASI service experience, plus conditional selected work, concise trust content, published-content reads from Sanity, SEO fundamentals, and Cloudflare Pages build readiness. Selected photography, production booking software, analytics, legal review, redirects, and launch work are intentionally deferred.
+This repository contains the V1.5 one-page destination hub: a fast mobile-first service chooser that routes visitors to the canonical EverythingBASI service experience, plus six curated Sanity-managed work images, concise trust content, SEO fundamentals, and Cloudflare Pages build readiness. Production booking software, analytics, legal review, redirects, and custom-domain activation remain intentionally deferred.
 
 ## Architecture
 
@@ -43,6 +43,7 @@ npm run studio:dev
 npm run studio:build
 npm run studio:validate
 npm run sanity:seed -- --dry-run
+npm run sanity:publish-work -- --dry-run
 ```
 
 `npm run studio:deploy` exists for a later, separately authorized Studio deployment. It is not part of the foundation task.
@@ -77,6 +78,8 @@ Before editors use the Studio, add only controlled origins that require authenti
 `npm run sanity:seed` updates the approved production copy using deterministic IDs for Site Settings, Home Page, five Service documents, and seven Link / Action documents. It requires an authenticated Sanity CLI session and refuses to run against any project or dataset except `spjfohj1/production`.
 
 Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs update the same documents, preserve editor-managed media and unrelated fields, and never create testimonials or portfolio images.
+
+`npm run sanity:publish-work` uploads the six owner-approved files from the ignored local `images/` directory, reuses identical Sanity assets by SHA-1, and replaces only the canonical Home Page `selectedWork` array with deterministic entries. Run its dry-run first. The general content seed deliberately does not set `selectedWork` or `heroImage`, so future copy updates preserve published imagery.
 
 ### Content workflow
 
@@ -122,6 +125,7 @@ src/pages/              Astro routes
 src/styles/             Central visual tokens and responsive styles
 src/types/              Frontend content contracts
 studio/                 Dedicated Sanity Studio config and schemas
+images/                 Ignored local source photography for authenticated Sanity upload
 ```
 
 The two original supplied PNG files remain unchanged at the repository root. Exact copies with stable, meaningful filenames are used from `src/assets/brand/` so Astro can process their dimensions and output.
@@ -137,15 +141,27 @@ The two original supplied PNG files remain unchanged at the repository root. Exa
 
 The service, work, and contact experiences are homepage sections rather than standalone routes. The sitemap therefore contains only `/`, `/privacy`, and `/terms`.
 
+## Custom-domain prelaunch
+
+As audited on 2026-08-23, `bookbasi.com` still uses Namecheap BasicDNS nameservers and parking records. The apex and `www` hostnames are not connected to Pages. The next authorized launch phase should:
+
+1. Add or confirm `bookbasi.com` as a Cloudflare zone and copy every DNS record that must be preserved.
+2. Use the exact nameservers assigned in the Cloudflare zone Overview; then replace the Namecheap nameserver delegation with those values and wait for the zone to become Active.
+3. In the `bookbasi` Pages project, add `bookbasi.com` through **Custom domains** before relying on its DNS record, then confirm certificate issuance and HTTPS.
+4. Add `www.bookbasi.com` and configure a permanent host redirect to `https://bookbasi.com`, preserving paths and query strings.
+5. After both custom hosts are verified, permanently redirect `bookbasi.pages.dev` to the apex canonical host to avoid a duplicate public origin.
+6. Add a reviewed Sanity deploy hook that triggers the Cloudflare Pages build hook. There are currently no Sanity webhooks, so published CMS updates otherwise require a Git deployment or manual rebuild.
+
+The static frontend does not need browser CORS access to Sanity. The current Sanity allowlist contains only `http://localhost:3333`; add only the exact HTTPS origin chosen for a future separately deployed Studio. A suitable Studio hostname is `https://studio.bookbasi.com` or Sanity-managed Studio hosting, kept separate from the public Pages bundle.
+
 ## Future phases
 
 Recommended follow-on work:
 
-1. Populate and review the approved service and trust content in Sanity
-2. Select photography, define crops and alt text, and populate the curated work set
-3. Sanity content population and editorial QA
-4. Booking-provider selection and centralized destination update
-5. Reviewed legal policies and production SEO refinement
-6. Sanity build hook, analytics decisions, redirect planning, deployment review, and launch
+1. Review the approved image-backed Cloudflare deployment
+2. Activate the apex and `www` domain flow after explicit authorization
+3. Configure the reviewed Sanity-to-Cloudflare build hook
+4. Deploy the separate Sanity Studio when an editing URL is approved
+5. Complete legal review, analytics decisions, and post-launch monitoring
 
 No production deployment or domain configuration is performed by this repository scaffold.

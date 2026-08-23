@@ -581,7 +581,7 @@ h4 {
 }
 
 .work-section {
-  padding-block: 3.75rem;
+  padding-block: 3rem;
 }
 
 .work-section-empty {
@@ -911,7 +911,6 @@ h4 {
 
   .work-item-featured {
     grid-column: span 2;
-    grid-row: span 2;
   }
 
   .value-grid {

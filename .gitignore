@@ -9,3 +9,6 @@ studio/dist/
 .DS_Store
 Thumbs.db
 npm-debug.log*
+
+# Owner-approved source photography is uploaded to Sanity and stays local.
+images/
