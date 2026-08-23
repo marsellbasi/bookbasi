@@ -35,7 +35,12 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
     image={home.heroImage}
   />
 
-  <ActionList {actions} eyebrow={home.chooserEyebrow} heading={home.chooserHeading} />
+  <ActionList
+    {actions}
+    eyebrow={home.chooserEyebrow}
+    heading={home.chooserHeading}
+    copy={home.chooserCopy}
+  />
 
   {home.showWork && (
     <FeaturedWork

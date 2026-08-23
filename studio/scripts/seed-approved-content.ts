@@ -40,8 +40,9 @@ const documents = [
       supportingCopy: 'Professional photography for events, teams, brands, and people.',
       primaryCta: {_type: 'callToAction', label: 'Book BASI', destination: '#services'},
       secondaryCta: {_type: 'callToAction', label: 'View Work', destination: 'https://everythingbasi.com/portfolio/'},
-      chooserEyebrow: 'Start here',
-      chooserHeading: 'Choose your next step',
+      chooserEyebrow: 'START HERE',
+      chooserHeading: 'How do you need to show up?',
+      chooserCopy: 'Every need looks different. Start with the service that fits the way you want to be seen.',
       servicesEyebrow: 'Services',
       servicesHeading: 'Photography built around how you show up.',
       introduction: 'Choose the service that fits your moment, team, brand, or individual presence.',
@@ -82,17 +83,17 @@ const documents = [
     values: {title, slug: {_type: 'slug', current: slug}, shortTitle, shortDescription, category, pricingLabel, duration, deliverables, bookingCtaLabel, featured, displayOrder, active: true},
   })),
   ...[
-    ['event-coverage', 'Event Coverage', 'Capture the full experience.', 'https://everythingbasi.com/events/', 'primary', 1],
-    ['team-headshots', 'Team Headshots', 'A consistent presence for your team.', 'https://everythingbasi.com/atlanta-business-headshots/', 'secondary', 2],
-    ['personal-branding', 'Personal Branding', 'Build a stronger visual presence.', 'https://everythingbasi.com/book/branding/', 'secondary', 3],
-    ['portrait-sessions', 'Portrait Sessions', 'Studio and outdoor options.', 'https://everythingbasi.com/portraits/', 'secondary', 4],
-    ['view-work', 'View Work', 'Explore the BASI portfolio.', 'https://everythingbasi.com/portfolio/', 'quiet', 5],
-    ['contact-basi', 'Contact BASI', 'Tell us what you are planning.', 'https://everythingbasi.com/contact/', 'quiet', 6],
-    ['instagram', 'Instagram', '@book.basi', 'https://www.instagram.com/book.basi/', 'quiet', 7],
-  ].map(([id, title, subtitle, url, variant, displayOrder]) => ({
+    ['event-coverage', 'Event Coverage', 'Capture the people, energy, and moments that make your event worth remembering.', 'Explore Event Coverage', 'https://everythingbasi.com/events/', 'primary', 1],
+    ['team-headshots', 'Team Headshots', 'Create a consistent, professional presence across your team.', 'Explore Team Headshots', 'https://everythingbasi.com/atlanta-business-headshots/', 'secondary', 2],
+    ['personal-branding', 'Personal Branding', 'Build a versatile visual foundation for your business, content, and ideas.', 'Explore Personal Branding', 'https://everythingbasi.com/book/branding/', 'secondary', 3],
+    ['portrait-sessions', 'Portrait Sessions', 'Create intentional portraits that feel polished, personal, and distinctly you.', 'Explore Portrait Sessions', 'https://everythingbasi.com/portraits/', 'secondary', 4],
+    ['view-work', 'View Work', 'Explore the BASI portfolio.', undefined, 'https://everythingbasi.com/portfolio/', 'quiet', 5],
+    ['contact-basi', 'Contact BASI', 'Tell us what you are planning.', undefined, 'https://everythingbasi.com/contact/', 'quiet', 6],
+    ['instagram', 'Instagram', '@book.basi', undefined, 'https://www.instagram.com/book.basi/', 'quiet', 7],
+  ].map(([id, title, subtitle, ctaLabel, url, variant, displayOrder]) => ({
     _id: `action.${id}`,
     _type: 'linkAction',
-    values: {title, subtitle, url, variant, displayOrder, active: true},
+    values: {title, subtitle, ctaLabel, url, variant, displayOrder, active: true},
   })),
 ] as Array<{_id: string; _type: string; values: Record<string, unknown>}>
 

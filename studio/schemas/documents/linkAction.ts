@@ -7,6 +7,7 @@ export const linkActionType = defineType({
   fields: [
     defineField({name: 'title', title: 'Title', type: 'string', validation: (rule) => rule.required().max(80)}),
     defineField({name: 'subtitle', title: 'Short subtitle', type: 'string', validation: (rule) => rule.max(120)}),
+    defineField({name: 'ctaLabel', title: 'CTA label', type: 'string', description: 'Optional contextual call to action displayed on primary service cards.', validation: (rule) => rule.max(80)}),
     defineField({name: 'url', title: 'URL or site path', type: 'string', validation: (rule) => rule.required().max(500)}),
     defineField({name: 'icon', title: 'Icon identifier', type: 'string', description: 'Optional identifier from the approved site icon set; never executable code.', validation: (rule) => rule.regex(/^[a-z0-9-]*$/i, {name: 'icon identifier'}).max(40)}),
     defineField({name: 'variant', title: 'Style', type: 'string', options: {list: ['primary', 'secondary', 'quiet'], layout: 'radio'}, initialValue: 'secondary', validation: (rule) => rule.required()}),

@@ -27,6 +27,7 @@ export interface HomePage {
   heroImage?: WorkImage
   chooserEyebrow: string
   chooserHeading: string
+  chooserCopy: string
   servicesEyebrow: string
   servicesHeading: string
   introduction: string
@@ -92,6 +93,7 @@ export interface LinkAction {
   _id: string
   title: string
   subtitle?: string
+  ctaLabel?: string
   url: string
   icon?: string
   variant: 'primary' | 'secondary' | 'quiet'

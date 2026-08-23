@@ -7,16 +7,17 @@ interface Props {
   actions: LinkAction[]
   eyebrow: string
   heading: string
+  copy: string
 }
 
-const {actions, eyebrow, heading} = Astro.props
+const {actions, eyebrow, heading, copy} = Astro.props
 const primaryActions = actions.filter((action) => action.variant !== 'quiet').slice(0, 4)
 const utilityActions = actions.filter((action) => action.variant === 'quiet')
 ---
 
 <section class="section quick-actions" id="services" aria-labelledby="quick-actions-title">
   <div class="container">
-    <SectionHeading {eyebrow} title={heading} id="quick-actions-title" />
+    <SectionHeading {eyebrow} title={heading} {copy} id="quick-actions-title" />
     <div class="action-list action-list-primary">
       {primaryActions.map((action) => <ActionLink action={action} />)}
     </div>

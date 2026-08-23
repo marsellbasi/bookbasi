@@ -19,8 +19,9 @@ export const fallbackHome: HomePage = {
   supportingCopy: 'Professional photography for events, teams, brands, and people.',
   primaryCta: {label: 'Book BASI', destination: '#services'},
   secondaryCta: {label: 'View Work', destination: 'https://everythingbasi.com/portfolio/'},
-  chooserEyebrow: 'Start here',
-  chooserHeading: 'Choose your next step',
+  chooserEyebrow: 'START HERE',
+  chooserHeading: 'How do you need to show up?',
+  chooserCopy: 'Every need looks different. Start with the service that fits the way you want to be seen.',
   servicesEyebrow: 'Services',
   servicesHeading: 'Photography built around how you show up.',
   introduction: 'Choose the service that fits your moment, team, brand, or individual presence.',
@@ -122,10 +123,10 @@ export const fallbackServices: Service[] = [
 ]
 
 export const fallbackActions: LinkAction[] = [
-  {_id: 'action.event-coverage', title: 'Event Coverage', subtitle: 'Capture the full experience.', url: 'https://everythingbasi.com/events/', variant: 'primary', displayOrder: 1},
-  {_id: 'action.team-headshots', title: 'Team Headshots', subtitle: 'A consistent presence for your team.', url: 'https://everythingbasi.com/atlanta-business-headshots/', variant: 'secondary', displayOrder: 2},
-  {_id: 'action.personal-branding', title: 'Personal Branding', subtitle: 'Build a stronger visual presence.', url: 'https://everythingbasi.com/book/branding/', variant: 'secondary', displayOrder: 3},
-  {_id: 'action.portrait-sessions', title: 'Portrait Sessions', subtitle: 'Studio and outdoor options.', url: 'https://everythingbasi.com/portraits/', variant: 'secondary', displayOrder: 4},
+  {_id: 'action.event-coverage', title: 'Event Coverage', subtitle: 'Capture the people, energy, and moments that make your event worth remembering.', ctaLabel: 'Explore Event Coverage', url: 'https://everythingbasi.com/events/', variant: 'primary', displayOrder: 1},
+  {_id: 'action.team-headshots', title: 'Team Headshots', subtitle: 'Create a consistent, professional presence across your team.', ctaLabel: 'Explore Team Headshots', url: 'https://everythingbasi.com/atlanta-business-headshots/', variant: 'secondary', displayOrder: 2},
+  {_id: 'action.personal-branding', title: 'Personal Branding', subtitle: 'Build a versatile visual foundation for your business, content, and ideas.', ctaLabel: 'Explore Personal Branding', url: 'https://everythingbasi.com/book/branding/', variant: 'secondary', displayOrder: 3},
+  {_id: 'action.portrait-sessions', title: 'Portrait Sessions', subtitle: 'Create intentional portraits that feel polished, personal, and distinctly you.', ctaLabel: 'Explore Portrait Sessions', url: 'https://everythingbasi.com/portraits/', variant: 'secondary', displayOrder: 4},
   {_id: 'action.view-work', title: 'View Work', subtitle: 'Explore the BASI portfolio.', url: 'https://everythingbasi.com/portfolio/', variant: 'quiet', displayOrder: 5},
   {_id: 'action.contact-basi', title: 'Contact BASI', subtitle: 'Tell us what you are planning.', url: 'https://everythingbasi.com/contact/', variant: 'quiet', displayOrder: 6},
   {_id: 'action.instagram', title: 'Instagram', subtitle: '@book.basi', url: 'https://www.instagram.com/book.basi/', variant: 'quiet', displayOrder: 7},

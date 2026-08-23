@@ -19,9 +19,16 @@ const actionId = action._id.replace(/^(action\.|fallback-?)/, '')
   rel={opensNewTab ? 'noopener' : undefined}
   data-action={actionId}
 >
-  <span>
+  <span class="action-copy">
     <strong>{action.title}</strong>
     {action.subtitle && <small>{action.subtitle}</small>}
   </span>
-  <span class="action-arrow" aria-hidden="true">{opensNewTab ? '↗' : isAnchor ? '↓' : '→'}</span>
+  {action.ctaLabel && action.variant !== 'quiet' ? (
+    <span class="action-cta">
+      {action.ctaLabel}
+      <span class="action-arrow" aria-hidden="true">→</span>
+    </span>
+  ) : (
+    <span class="action-arrow" aria-hidden="true">{opensNewTab ? '↗' : isAnchor ? '↓' : '→'}</span>
+  )}
 </a>

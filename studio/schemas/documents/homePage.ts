@@ -19,6 +19,7 @@ export const homePageType = defineType({
     defineField({name: 'heroImage', title: 'Optional hero image', type: 'imageWithAlt', group: 'hero', description: 'When empty, the complete black editorial hero is used. Crop and hotspot are respected when an image is published.'}),
     defineField({name: 'chooserEyebrow', title: 'Service chooser eyebrow', type: 'string', group: 'content', validation: (rule) => rule.max(80)}),
     defineField({name: 'chooserHeading', title: 'Service chooser heading', type: 'string', group: 'content', validation: (rule) => rule.max(100)}),
+    defineField({name: 'chooserCopy', title: 'Service chooser supporting copy', type: 'text', rows: 3, group: 'content', validation: (rule) => rule.max(240)}),
     defineField({name: 'servicesEyebrow', title: 'Services eyebrow', type: 'string', group: 'content', validation: (rule) => rule.max(80)}),
     defineField({name: 'servicesHeading', title: 'Services heading', type: 'string', group: 'content', validation: (rule) => rule.max(120)}),
     defineField({name: 'introduction', title: 'Introduction', type: 'text', rows: 4, group: 'content', validation: (rule) => rule.max(500)}),
