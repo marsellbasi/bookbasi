@@ -4,7 +4,7 @@ import {resolve} from 'node:path'
 const studioRoot = resolve(import.meta.dirname, '..')
 const sourceRoot = resolve(studioRoot, 'static')
 const outputRoot = resolve(studioRoot, 'dist')
-const deploymentFiles = ['_headers', '_redirects', 'robots.txt']
+const deploymentFiles = ['_headers', 'robots.txt']
 
 await mkdir(outputRoot, {recursive: true})
 await Promise.all(

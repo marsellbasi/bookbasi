@@ -82,6 +82,8 @@ Sanity CORS should contain only the reviewed Studio origins: `http://localhost:3
 - Studio Pages project: `bookbasi-studio`, production branch `main`
 - Studio build: repository root, `npm run studio:build`, output `studio/dist`, Node 22
 
+The Studio output intentionally has no top-level `404.html`; Cloudflare Pages therefore applies its native single-page-application fallback for direct Studio route refreshes.
+
 Publishing follows: Studio publish → Sanity `production` → the existing production webhook → the public `bookbasi` Cloudflare Pages rebuild → `https://bookbasi.com`.
 
 For Studio deployment failures, inspect the `bookbasi-studio` Pages build logs. For authentication or API failures, verify the exact production Studio origin in Sanity CORS. For public content delays, inspect the Sanity webhook delivery history and the public `bookbasi` Pages deployment logs. Deploy-hook URLs and credentials must never be stored in the repository.
