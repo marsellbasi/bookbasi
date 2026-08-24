@@ -28,12 +28,17 @@ const {heading, copy, images, instagramUrl, portfolioUrl} = Astro.props
         {images.map((image, index) => {
           const ratio = workImageRatio(image, index)
           const imageHeight = (width: number) => Math.round(width * ratio.height / ratio.width)
+          const sizes = index === 0
+            ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw'
+            : index === images.length - 1
+              ? '(max-width: 640px) 100vw, (max-width: 959px) 25vw, 50vw'
+              : '(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw'
           return (
             <figure class:list={['work-item', `work-item-${ratio.name}`, index === 0 && 'work-item-featured']}>
               <img
                 src={sanityImageUrl(image, 960, imageHeight(960))}
                 srcset={`${sanityImageUrl(image, 480, imageHeight(480))} 480w, ${sanityImageUrl(image, 800, imageHeight(800))} 800w, ${sanityImageUrl(image, 1200, imageHeight(1200))} 1200w`}
-                sizes={index === 0 ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw' : '(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw'}
+                sizes={sizes}
                 alt={image.alt}
                 width={ratio.width * 200}
                 height={ratio.height * 200}
