@@ -2,7 +2,7 @@
 
 Book BASI is BASI's mobile-first services and conversion website. BASI means foundation; the brand position is **The Foundation of Presence**.
 
-This repository contains the V1.5 one-page destination hub: a fast mobile-first service chooser that routes visitors to the canonical EverythingBASI service experience, plus six curated Sanity-managed work images, concise trust content, SEO fundamentals, and Cloudflare Pages build readiness. Production booking software, analytics, legal review, redirects, and custom-domain activation remain intentionally deferred.
+This repository contains the production one-page destination hub: a fast mobile-first service chooser that routes visitors to the canonical EverythingBASI service experience, plus six curated Sanity-managed work images, concise trust content, and SEO fundamentals. The public site is live at `https://bookbasi.com`, Cloudflare provides pageview/performance analytics, and conversion-event analytics and final legal review remain owner decisions.
 
 ## Architecture
 
@@ -14,7 +14,7 @@ This repository contains the V1.5 one-page destination hub: a fast mobile-first 
 - **Runtime:** no frontend framework hydration and no required client-side JavaScript
 - **Commercial model:** five homepage chapters using `#services`, `#work`, `#why-basi`, and `#contact`; service choices are ordinary CMS-managed links to EverythingBASI
 
-Published Sanity content is fetched at build time. Restrained local fallback content allows a clean first build before the corresponding documents are published. Once documents exist, published CMS values replace the fallbacks. A Sanity build hook can be configured in a later launch phase so publishing content triggers a new static deployment.
+Published Sanity content is fetched at build time. Restrained local fallback content allows a clean build when a corresponding document or the CMS is unavailable. Once documents exist, published CMS values replace the fallbacks. The reviewed Sanity production webhook triggers the public Cloudflare Pages deploy hook after qualifying published content changes.
 
 ## Prerequisites
 
@@ -109,9 +109,9 @@ Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs 
 4. Add active Link / Action documents in display order.
 5. Add four to six accessible images to **Home Page → Selected portfolio imagery** when approved work is ready. Every published image requires factual alt text and supports an authored crop, hotspot, category, display priority, and optional orientation hint.
 6. Publish reviewed content.
-7. Run `npm run build` to regenerate the static site. Configure a Sanity-to-Cloudflare build hook only during the launch phase.
+7. Publish approved changes. The existing Sanity-to-Cloudflare webhook triggers a new public production build automatically.
 
-Link / Action documents own the homepage routing destinations. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination.
+Published Link / Action documents override the reviewed homepage routing fallbacks; in their absence, the production-safe fallback destinations keep every conversion path functional. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination.
 
 ## Cloudflare Pages
 
@@ -156,16 +156,13 @@ The two original supplied PNG files remain unchanged at the repository root. Exa
 
 The service, work, and contact experiences are homepage sections rather than standalone routes. The sitemap therefore contains only `/`, `/privacy`, and `/terms`.
 
-## Custom-domain prelaunch
+## Production domains
 
-As audited on 2026-08-23, `bookbasi.com` still uses Namecheap BasicDNS nameservers and parking records. The apex and `www` hostnames are not connected to Pages. The next authorized launch phase should:
-
-1. Add or confirm `bookbasi.com` as a Cloudflare zone and copy every DNS record that must be preserved.
-2. Use the exact nameservers assigned in the Cloudflare zone Overview; then replace the Namecheap nameserver delegation with those values and wait for the zone to become Active.
-3. In the `bookbasi` Pages project, add `bookbasi.com` through **Custom domains** before relying on its DNS record, then confirm certificate issuance and HTTPS.
-4. Add `www.bookbasi.com` and configure a permanent host redirect to `https://bookbasi.com`, preserving paths and query strings.
-5. After both custom hosts are verified, permanently redirect `bookbasi.pages.dev` to the apex canonical host to avoid a duplicate public origin.
-6. The reviewed Sanity production webhook triggers the public `bookbasi` Cloudflare Pages deploy hook after qualifying published content changes.
+- `https://bookbasi.com` is the canonical public site.
+- `https://www.bookbasi.com` permanently redirects to the apex host.
+- `https://bookbasi.pages.dev` permanently redirects to the apex host.
+- `https://studio.bookbasi.com` is the separately deployed authenticated Sanity Studio.
+- Published Sanity production changes trigger the reviewed public `bookbasi` Pages deploy hook.
 
 The static frontend does not need browser CORS access to Sanity. Keep the CORS allowlist limited to the local Studio and the exact production Studio origin.
 
@@ -173,8 +170,8 @@ The static frontend does not need browser CORS access to Sanity. Keep the CORS a
 
 Recommended follow-on work:
 
-1. Review the approved image-backed Cloudflare deployment
-2. Activate the apex and `www` domain flow after explicit authorization
-3. Complete legal review, analytics decisions, and post-launch monitoring
+1. Complete owner/legal review of the Privacy and Terms content
+2. Decide whether conversion-event analytics should be added beyond Cloudflare pageview/performance analytics
+3. Establish routine post-launch monitoring and search-console ownership
 
 The public site and Studio remain operationally isolated Cloudflare Pages projects connected to the same repository and production Sanity dataset.

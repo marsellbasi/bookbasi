@@ -81,8 +81,18 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-gold);
+  outline: 3px solid var(--color-gold-text);
   outline-offset: 4px;
+}
+
+.section-dark :focus-visible,
+.site-header :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--color-gold);
+}
+
+.section-gold :focus-visible {
+  outline-color: var(--color-dark);
 }
 
 ::selection {

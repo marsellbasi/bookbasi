@@ -2,6 +2,7 @@
 import SEO from '@/components/SEO.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import SiteHeader from '@/components/SiteHeader.astro'
+import socialImageFallback from '@/assets/brand/basi-logo-black-background.png'
 import {getSiteSettings} from '@/lib/content'
 import '@/styles/global.css'
 
@@ -18,9 +19,12 @@ const {
   title = settings.defaultSeoTitle,
   description = settings.defaultSeoDescription,
   canonical,
-  image = settings.socialImageUrl,
+  image: providedImage,
   noindex = false,
 } = Astro.props
+const configuredImage = providedImage || settings.socialImageUrl
+const image = configuredImage || socialImageFallback.src
+const twitterCard: 'summary' | 'summary_large_image' = configuredImage ? 'summary_large_image' : 'summary'
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -50,7 +54,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="theme-color" content="#0b0b0b" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2214%22 fill=%22%230b0b0b%22/><text y=%22.76em%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2270%22 fill=%22%23d9b633%22>B</text></svg>" />
-    <SEO {title} {description} {canonical} {image} {noindex} />
+    <SEO {title} {description} {canonical} {image} {twitterCard} {noindex} />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
