@@ -5,6 +5,7 @@
   --color-muted: #62615d;
   --color-border: #d8d6ce;
   --color-gold: #d6b32c;
+  --color-gold-border: rgb(214 179 44 / 68%);
   --color-gold-hover: #e7c84b;
   --color-gold-text: #725900;
   --color-dark: #0b0b0b;
@@ -401,10 +402,13 @@ h4 {
 }
 
 .action-list-primary .action-link {
-  min-height: 8.25rem;
-  gap: var(--space-2);
-  padding: 0.875rem var(--space-4);
-  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  min-height: 9rem;
+  gap: var(--space-3);
+  padding: 1.125rem var(--space-4);
+  border-color: var(--color-gold-border);
+  background: var(--color-bg);
+  color: var(--color-dark);
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 
 .action-link {
@@ -423,25 +427,14 @@ h4 {
 
 .action-link:hover,
 .action-link:focus-visible {
-  border-color: var(--color-dark);
-  background: var(--color-surface);
-}
-
-.action-primary {
-  border-color: var(--color-dark);
-  background: var(--color-dark);
-  color: var(--color-light);
-}
-
-.action-primary:hover,
-.action-primary:focus-visible {
   border-color: var(--color-gold);
-  background: var(--color-dark-soft);
+  background: var(--color-bg);
 }
 
 @media (hover: hover) {
   .action-list-primary .action-link:hover {
     transform: translateY(-2px);
+    box-shadow: 0 0.75rem 1.75rem rgb(11 11 11 / 7%);
   }
 }
 
@@ -451,6 +444,8 @@ h4 {
 
 .action-list-primary .action-link:active {
   transform: translateY(1px);
+  border-color: var(--color-gold);
+  background: var(--color-surface);
   transition-duration: 90ms;
 }
 
@@ -461,7 +456,9 @@ h4 {
 }
 
 .action-link strong {
+  color: var(--color-dark);
   font-size: var(--step-1);
+  font-weight: 760;
   line-height: 1.2;
 }
 
@@ -471,10 +468,6 @@ h4 {
   color: var(--color-muted);
   font-size: 0.95rem;
   line-height: 1.5;
-}
-
-.action-primary small {
-  color: #c8c6c0;
 }
 
 .action-cta {
@@ -487,10 +480,6 @@ h4 {
   letter-spacing: 0.01em;
   line-height: 1.2;
   white-space: nowrap;
-}
-
-.action-primary .action-cta {
-  color: var(--color-gold);
 }
 
 .action-arrow {
