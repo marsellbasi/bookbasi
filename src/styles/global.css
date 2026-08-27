@@ -1087,6 +1087,14 @@ h4 {
     padding-block: 4.5rem;
   }
 
+  .quick-actions .container {
+    max-width: 68rem;
+  }
+
+  .quick-actions .section-heading {
+    margin-bottom: var(--space-4);
+  }
+
   .service-detail-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
