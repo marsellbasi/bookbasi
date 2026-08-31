@@ -90,7 +90,7 @@ For Studio deployment failures, inspect the `bookbasi-studio` Pages build logs. 
 
 ### Approved content seed
 
-`npm run sanity:seed` updates the approved production copy using deterministic IDs for Site Settings, Home Page, five Service documents, and seven Link / Action documents. It requires an authenticated Sanity CLI session and refuses to run against any project or dataset except `spjfohj1/production`.
+`npm run sanity:seed` updates the approved production copy using deterministic IDs for Site Settings, Home Page, five Service documents, and three utility Link / Action documents. It requires an authenticated Sanity CLI session and refuses to run against any project or dataset except `spjfohj1/production`. The Home Page service-card array is created only when missing so routine seeds cannot overwrite editor-managed card order or content.
 
 Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs update the same documents, preserve editor-managed media and unrelated fields, and never create testimonials or portfolio images.
 
@@ -106,12 +106,12 @@ Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs 
    - `personal-branding`
    - `studio-portraits`
    - `outdoor-portraits`
-4. Add active Link / Action documents in display order.
+4. Manage primary cards in **Home Page → Start Here / Services → Service cards**. Drag array items to set their exact display order; use Link / Action documents only for utility links.
 5. Add four to six accessible images to **Home Page → Selected portfolio imagery** when approved work is ready. Every published image requires factual alt text and supports an authored crop, hotspot, category, display priority, and optional orientation hint.
 6. Publish reviewed content.
 7. Publish approved changes. The existing Sanity-to-Cloudflare webhook triggers a new public production build automatically.
 
-Published Link / Action documents override the reviewed homepage routing fallbacks; in their absence, the production-safe fallback destinations keep every conversion path functional. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination.
+Published Home Page service cards and utility Link / Action documents override their reviewed build-failure fallbacks. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination. See `BOOKBASI_SANITY_SERVICE_CARD_MANAGEMENT.md` for the complete editorial and implementation workflow.
 
 ## Cloudflare Pages
 

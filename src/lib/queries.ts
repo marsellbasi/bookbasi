@@ -32,6 +32,15 @@ export const homeQuery = `*[_type == "homePage"][0]{
   chooserEyebrow,
   chooserHeading,
   chooserCopy,
+  "serviceCards": serviceCards[]{
+    _key,
+    internalName,
+    title,
+    description,
+    ctaLabel,
+    ctaUrl,
+    isActive
+  },
   servicesEyebrow,
   servicesHeading,
   introduction,
@@ -86,7 +95,7 @@ export const servicesQuery = `*[_type == "service" && defined(slug.current)] | o
   active
 }`
 
-export const actionsQuery = `*[_type == "linkAction" && active == true] | order(displayOrder asc){
+export const actionsQuery = `*[_type == "linkAction" && active == true && variant == "quiet"] | order(displayOrder asc){
   _id,
   title,
   subtitle,

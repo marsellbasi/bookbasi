@@ -14,6 +14,7 @@
     "studio:validate": "cd studio && sanity schema validate",
     "studio:schema:deploy": "cd studio && sanity schemas deploy",
     "sanity:seed": "cd studio && sanity exec scripts/seed-approved-content.ts --with-user-token --",
+    "sanity:migrate-service-cards": "cd studio && sanity exec scripts/migrate-home-service-cards.ts --with-user-token --",
     "sanity:publish-work": "cd studio && sanity exec scripts/publish-selected-work.ts --with-user-token --",
     "studio:deploy": "cd studio && sanity deploy"
   },

@@ -1,6 +1,7 @@
 import {callToActionType} from './objects/callToAction'
 import {imageWithAltType} from './objects/imageWithAlt'
 import {seoType} from './objects/seo'
+import {serviceCardType} from './objects/serviceCard'
 import {trustPointType} from './objects/trustPoint'
 import {faqType} from './documents/faq'
 import {homePageType} from './documents/homePage'
@@ -13,6 +14,7 @@ export const schemaTypes = [
   callToActionType,
   imageWithAltType,
   seoType,
+  serviceCardType,
   trustPointType,
   siteSettingsType,
   homePageType,

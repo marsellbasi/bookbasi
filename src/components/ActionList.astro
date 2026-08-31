@@ -1,17 +1,26 @@
 ---
 import ActionLink from '@/components/ActionLink.astro'
 import SectionHeading from '@/components/SectionHeading.astro'
-import type {LinkAction} from '@/types/content'
+import type {HomepageServiceCard, LinkAction} from '@/types/content'
 
 interface Props {
   actions: LinkAction[]
+  serviceCards: HomepageServiceCard[]
   eyebrow: string
   heading: string
   copy: string
 }
 
-const {actions, eyebrow, heading, copy} = Astro.props
-const primaryActions = actions.filter((action) => action.variant !== 'quiet').slice(0, 4)
+const {actions, serviceCards, eyebrow, heading, copy} = Astro.props
+const primaryActions: LinkAction[] = serviceCards.map((card, index) => ({
+  _id: `action.${card._key}`,
+  title: card.title,
+  subtitle: card.description,
+  ctaLabel: card.ctaLabel,
+  url: card.ctaUrl,
+  variant: index === 0 ? 'primary' : 'secondary',
+  displayOrder: index,
+}))
 const utilityActions = actions.filter((action) => action.variant === 'quiet')
 ---
 

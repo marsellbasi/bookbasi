@@ -14,6 +14,13 @@ if (config.projectId !== PROJECT_ID || config.dataset !== DATASET) {
 
 const bookingDestination = 'mailto:info@everythingbasi.com?subject=Book%20BASI%20Inquiry'
 
+const approvedServiceCards = [
+  {_key: 'event-coverage', _type: 'serviceCard', internalName: 'Event Coverage', title: 'Event Coverage', description: 'Capture the people, energy, and moments that make your event worth remembering.', ctaLabel: 'Explore Event Coverage', ctaUrl: 'https://everythingbasi.com/events/', isActive: true},
+  {_key: 'team-headshots', _type: 'serviceCard', internalName: 'Team Headshots', title: 'Team Headshots', description: 'Create a consistent, professional presence across your team.', ctaLabel: 'Explore Team Headshots', ctaUrl: 'https://everythingbasi.com/atlanta-business-headshots/', isActive: true},
+  {_key: 'personal-branding', _type: 'serviceCard', internalName: 'Personal Branding', title: 'Personal Branding', description: 'Build a versatile visual foundation for your business, content, and ideas.', ctaLabel: 'Explore Personal Branding', ctaUrl: 'https://everythingbasi.com/book/branding/', isActive: true},
+  {_key: 'portrait-sessions', _type: 'serviceCard', internalName: 'Portrait Sessions', title: 'Portrait Sessions', description: 'Create intentional portraits that feel polished, personal, and distinctly you.', ctaLabel: 'Explore Portrait Sessions', ctaUrl: 'https://everythingbasi.com/portraits/', isActive: true},
+]
+
 const documents = [
   {
     _id: 'siteSettings',
@@ -34,6 +41,7 @@ const documents = [
   {
     _id: 'homePage',
     _type: 'homePage',
+    setIfMissing: {serviceCards: approvedServiceCards},
     values: {
       eyebrow: 'The Foundation of Presence',
       headline: 'Make your presence visible.',
@@ -83,10 +91,6 @@ const documents = [
     values: {title, slug: {_type: 'slug', current: slug}, shortTitle, shortDescription, category, pricingLabel, duration, deliverables, bookingCtaLabel, featured, displayOrder, active: true},
   })),
   ...[
-    ['event-coverage', 'Event Coverage', 'Capture the people, energy, and moments that make your event worth remembering.', 'Explore Event Coverage', 'https://everythingbasi.com/events/', 'primary', 1],
-    ['team-headshots', 'Team Headshots', 'Create a consistent, professional presence across your team.', 'Explore Team Headshots', 'https://everythingbasi.com/atlanta-business-headshots/', 'secondary', 2],
-    ['personal-branding', 'Personal Branding', 'Build a versatile visual foundation for your business, content, and ideas.', 'Explore Personal Branding', 'https://everythingbasi.com/book/branding/', 'secondary', 3],
-    ['portrait-sessions', 'Portrait Sessions', 'Create intentional portraits that feel polished, personal, and distinctly you.', 'Explore Portrait Sessions', 'https://everythingbasi.com/portraits/', 'secondary', 4],
     ['view-work', 'View Work', 'Explore the BASI portfolio.', undefined, 'https://everythingbasi.com/portfolio/', 'quiet', 5],
     ['contact-basi', 'Contact BASI', 'Tell us what you are planning.', undefined, 'https://everythingbasi.com/contact/', 'quiet', 6],
     ['instagram', 'Instagram', '@book.basi', undefined, 'https://www.instagram.com/book.basi/', 'quiet', 7],
@@ -95,7 +99,7 @@ const documents = [
     _type: 'linkAction',
     values: {title, subtitle, ctaLabel, url, variant, displayOrder, active: true},
   })),
-] as Array<{_id: string; _type: string; values: Record<string, unknown>}>
+] as Array<{_id: string; _type: string; values: Record<string, unknown>; setIfMissing?: Record<string, unknown>}>
 
 const existing = await client.fetch<Array<{_id: string}>>(
   '*[_id in $ids]{_id}',
@@ -107,7 +111,9 @@ console.log(`${dryRun ? 'Dry run' : 'Seed'}: ${documents.length} canonical docum
 if (!dryRun) {
   for (const document of documents) {
     await client.createIfNotExists({_id: document._id, _type: document._type})
-    await client.patch(document._id).set(document.values).commit()
+    let patch = client.patch(document._id).set(document.values)
+    if (document.setIfMissing) patch = patch.setIfMissing(document.setIfMissing)
+    await patch.commit()
   }
   console.log(`Updated approved content in ${PROJECT_ID}/${DATASET}. Media and unrelated fields were preserved.`)
 }

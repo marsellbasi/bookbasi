@@ -1,4 +1,43 @@
-import type {HomePage, LinkAction, Service, SiteSettings} from '@/types/content'
+import type {HomePage, HomepageServiceCard, LinkAction, Service, SiteSettings} from '@/types/content'
+
+export const fallbackServiceCards: HomepageServiceCard[] = [
+  {
+    _key: 'event-coverage',
+    internalName: 'Event Coverage',
+    title: 'Event Coverage',
+    description: 'Capture the people, energy, and moments that make your event worth remembering.',
+    ctaLabel: 'Explore Event Coverage',
+    ctaUrl: 'https://everythingbasi.com/events/',
+    isActive: true,
+  },
+  {
+    _key: 'team-headshots',
+    internalName: 'Team Headshots',
+    title: 'Team Headshots',
+    description: 'Create a consistent, professional presence across your team.',
+    ctaLabel: 'Explore Team Headshots',
+    ctaUrl: 'https://everythingbasi.com/atlanta-business-headshots/',
+    isActive: true,
+  },
+  {
+    _key: 'personal-branding',
+    internalName: 'Personal Branding',
+    title: 'Personal Branding',
+    description: 'Build a versatile visual foundation for your business, content, and ideas.',
+    ctaLabel: 'Explore Personal Branding',
+    ctaUrl: 'https://everythingbasi.com/book/branding/',
+    isActive: true,
+  },
+  {
+    _key: 'portrait-sessions',
+    internalName: 'Portrait Sessions',
+    title: 'Portrait Sessions',
+    description: 'Create intentional portraits that feel polished, personal, and distinctly you.',
+    ctaLabel: 'Explore Portrait Sessions',
+    ctaUrl: 'https://everythingbasi.com/portraits/',
+    isActive: true,
+  },
+]
 
 export const fallbackSettings: SiteSettings = {
   siteTitle: 'Book BASI',
@@ -22,6 +61,7 @@ export const fallbackHome: HomePage = {
   chooserEyebrow: 'START HERE',
   chooserHeading: 'How do you need to show up?',
   chooserCopy: 'Every need looks different. Start with the service that fits the way you want to be seen.',
+  serviceCards: fallbackServiceCards,
   servicesEyebrow: 'Services',
   servicesHeading: 'Photography built around how you show up.',
   introduction: 'Choose the service that fits your moment, team, brand, or individual presence.',
@@ -123,10 +163,6 @@ export const fallbackServices: Service[] = [
 ]
 
 export const fallbackActions: LinkAction[] = [
-  {_id: 'action.event-coverage', title: 'Event Coverage', subtitle: 'Capture the people, energy, and moments that make your event worth remembering.', ctaLabel: 'Explore Event Coverage', url: 'https://everythingbasi.com/events/', variant: 'primary', displayOrder: 1},
-  {_id: 'action.team-headshots', title: 'Team Headshots', subtitle: 'Create a consistent, professional presence across your team.', ctaLabel: 'Explore Team Headshots', url: 'https://everythingbasi.com/atlanta-business-headshots/', variant: 'secondary', displayOrder: 2},
-  {_id: 'action.personal-branding', title: 'Personal Branding', subtitle: 'Build a versatile visual foundation for your business, content, and ideas.', ctaLabel: 'Explore Personal Branding', url: 'https://everythingbasi.com/book/branding/', variant: 'secondary', displayOrder: 3},
-  {_id: 'action.portrait-sessions', title: 'Portrait Sessions', subtitle: 'Create intentional portraits that feel polished, personal, and distinctly you.', ctaLabel: 'Explore Portrait Sessions', url: 'https://everythingbasi.com/portraits/', variant: 'secondary', displayOrder: 4},
   {_id: 'action.view-work', title: 'View Work', subtitle: 'Explore the BASI portfolio.', url: 'https://everythingbasi.com/portfolio/', variant: 'quiet', displayOrder: 5},
   {_id: 'action.contact-basi', title: 'Contact BASI', subtitle: 'Tell us what you are planning.', url: 'https://everythingbasi.com/contact/', variant: 'quiet', displayOrder: 6},
   {_id: 'action.instagram', title: 'Instagram', subtitle: '@book.basi', url: 'https://www.instagram.com/book.basi/', variant: 'quiet', displayOrder: 7},

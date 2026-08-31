@@ -28,6 +28,7 @@ export interface HomePage {
   chooserEyebrow: string
   chooserHeading: string
   chooserCopy: string
+  serviceCards: HomepageServiceCard[]
   servicesEyebrow: string
   servicesHeading: string
   introduction: string
@@ -48,6 +49,16 @@ export interface HomePage {
   contactCopy: string
   seoTitle?: string
   seoDescription?: string
+}
+
+export interface HomepageServiceCard {
+  _key: string
+  internalName: string
+  title: string
+  description: string
+  ctaLabel: string
+  ctaUrl: string
+  isActive: boolean
 }
 
 export interface TrustPoint {

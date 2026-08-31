@@ -1,6 +1,7 @@
 import {sanityClient} from 'sanity:client'
 import {fallbackActions, fallbackHome, fallbackServices, fallbackSettings} from '@/data/fallback'
 import {actionsQuery, homeQuery, servicesQuery, settingsQuery, testimonialsQuery} from '@/lib/queries'
+import {getVisibleServiceCards} from '@/lib/serviceCards'
 import type {HomePage, LinkAction, Service, SiteSettings, Testimonial} from '@/types/content'
 
 async function fetchOrFallback<T>(query: string, fallback: T): Promise<T> {
@@ -49,6 +50,9 @@ export async function getHomePage(): Promise<HomePage> {
       : fallbackHome.trustPoints,
     workHeading: value.workHeading || fallbackHome.workHeading,
     workCopy: value.workCopy || fallbackHome.workCopy,
+    serviceCards: Array.isArray(value.serviceCards)
+      ? getVisibleServiceCards(value.serviceCards).map((card) => ({...card, ctaUrl: normalizeDestination(card.ctaUrl)}))
+      : fallbackHome.serviceCards,
     selectedWork: (value.selectedWork || [])
       .filter((image) => image.url && image.width && image.height && image.alt)
       .sort((a, b) => (a.displayOrder ?? 100) - (b.displayOrder ?? 100))
@@ -75,7 +79,9 @@ export async function getServices(): Promise<Service[]> {
 
 export async function getActions(): Promise<LinkAction[]> {
   const actions = await fetchOrFallback<LinkAction[]>(actionsQuery, fallbackActions)
-  return actions.map((action) => ({...action, url: normalizeDestination(action.url)}))
+  return actions
+    .filter((action) => action.variant === 'quiet')
+    .map((action) => ({...action, url: normalizeDestination(action.url)}))
 }
 
 export function getTestimonials() {
