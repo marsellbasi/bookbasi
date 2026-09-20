@@ -26,9 +26,10 @@ type HeroDefinition = {
 const hero: HeroDefinition[] = [
   {
     role: 'event',
-    basename: 'hero-event',
-    alt: 'Guests filling plates along a catered buffet line at an indoor event while a server in black gloves restocks the trays',
-    hotspot: {x: 0.34, y: 0.42, width: 0.5, height: 0.86},
+    basename: 'hero-event2',
+    alt: 'Speaker in a black suit addressing seated and standing guests with a handheld microphone at an evening gala with black-and-gold decor and city skyline windows',
+    // 4:5 source matches the event slot exactly; the hotspot keeps the speaker if the slot ratio ever changes.
+    hotspot: {x: 0.33, y: 0.42, width: 0.42, height: 0.72},
   },
   {
     role: 'headshot',
@@ -40,9 +41,9 @@ const hero: HeroDefinition[] = [
     role: 'portrait',
     basename: 'hero-portrait2',
     alt: 'Studio portrait of a woman kneeling against a white backdrop, one hand raised into her hair, wearing a navy print bodysuit and layered gold necklaces',
-    hotspot: {x: 0.42, y: 0.22, width: 0.4, height: 0.3},
-    // Full-body source; the authored crop frames head to waist and keeps both hands inside the square collage slot.
-    crop: {top: 0.03, right: 0.05, bottom: 0.37, left: 0.05},
+    hotspot: {x: 0.42, y: 0.3, width: 0.5, height: 0.5},
+    // Full-body source; the full-width square shows head to mid-thigh (the most of the kneeling pose a square slot can hold) with both hands inside.
+    crop: {top: 0.01, right: 0, bottom: 0.32, left: 0},
   },
 ]
 

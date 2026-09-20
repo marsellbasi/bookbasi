@@ -97,7 +97,7 @@ Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs 
 
 `npm run sanity:publish-work` uploads the six owner-approved files from the ignored local `images/` directory, reuses identical Sanity assets by SHA-1, and replaces only the canonical Home Page `selectedWork` array with deterministic entries. Run its dry-run first. The general content seed deliberately does not set `selectedWork`, `heroImage`, or `heroCollage`, so future copy updates preserve published imagery.
 
-`npm run sanity:publish-hero` publishes the three-image editorial hero collage from the ignored local `images/hero/` directory (basenames defined in the script, currently `hero-event`, `hero-headshot`, `hero-portrait2`; `.jpg`, `.jpeg`, `.png`, or `.webp`, any case). It reuses identical assets by SHA-1, requires factual alt text in the script definitions, and replaces only the Home Page `heroCollage` object. Pass `--only event|headshot|portrait` to replace a single slot without rewriting the others. The frontend renders the collage only when all three images are published with alt text; otherwise it falls back to the optional single `heroImage`, then to the text-only editorial hero. Editors can later adjust each image, crop, hotspot, and alt text in **Home Page → Hero → Hero collage**.
+`npm run sanity:publish-hero` publishes the three-image editorial hero collage from the ignored local `images/hero/` directory (basenames defined in the script, currently `hero-event2`, `hero-headshot`, `hero-portrait2`; `.jpg`, `.jpeg`, `.png`, or `.webp`, any case). It reuses identical assets by SHA-1, requires factual alt text in the script definitions, and replaces only the Home Page `heroCollage` object. Pass `--only event|headshot|portrait` to replace a single slot without rewriting the others. The frontend renders the collage only when all three images are published with alt text; otherwise it falls back to the optional single `heroImage`, then to the text-only editorial hero. Editors can later adjust each image, crop, hotspot, and alt text in **Home Page → Hero → Hero collage**.
 
 ### Content workflow
 
@@ -144,7 +144,7 @@ src/styles/             Central visual tokens and responsive styles
 src/types/              Frontend content contracts
 studio/                 Dedicated Sanity Studio config and schemas
 images/                 Ignored local source photography for authenticated Sanity upload
-images/hero/            Ignored local hero collage sources (hero-event, hero-headshot, hero-portrait2)
+images/hero/            Ignored local hero collage sources (hero-event2, hero-headshot, hero-portrait2)
 ```
 
 The two original supplied PNG files remain unchanged at the repository root. Exact copies with stable, meaningful filenames are used from `src/assets/brand/` so Astro can process their dimensions and output.
