@@ -1,4 +1,5 @@
 import {callToActionType} from './objects/callToAction'
+import {heroCollageType} from './objects/heroCollage'
 import {imageWithAltType} from './objects/imageWithAlt'
 import {seoType} from './objects/seo'
 import {serviceCardType} from './objects/serviceCard'
@@ -12,6 +13,7 @@ import {testimonialType} from './documents/testimonial'
 
 export const schemaTypes = [
   callToActionType,
+  heroCollageType,
   imageWithAltType,
   seoType,
   serviceCardType,

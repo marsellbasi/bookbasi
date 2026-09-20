@@ -24,7 +24,10 @@ const {heading, copy, label, destination, secondaryLabel, secondaryDestination, 
       </div>
       <div class="cta-actions">
         <a class="button button-dark" href={destination}>{label}</a>
-        <a class="button button-outline-dark" href={secondaryDestination} data-action="contact-basi">{secondaryLabel}</a>
+        <div class="cta-secondary-group">
+          <a class="button button-outline-dark" href={secondaryDestination} data-action="contact-basi">{secondaryLabel}</a>
+          <p class="cta-microcopy">Typical response within 24–48 hours.</p>
+        </div>
       </div>
     </div>
     <div class="conversion-meta" aria-label="BASI contact details">

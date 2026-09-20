@@ -18,6 +18,13 @@ export const homePageType = defineType({
     defineField({name: 'primaryCta', title: 'Primary CTA', type: 'callToAction', group: 'hero'}),
     defineField({name: 'secondaryCta', title: 'Secondary CTA', type: 'callToAction', group: 'hero'}),
     defineField({name: 'heroImage', title: 'Optional hero image', type: 'imageWithAlt', group: 'hero', description: 'When empty, the complete black editorial hero is used. Crop and hotspot are respected when an image is published.'}),
+    defineField({
+      name: 'heroCollage',
+      title: 'Hero collage',
+      type: 'heroCollage',
+      group: 'hero',
+      description: 'The three-image editorial hero. When all three images are published, this replaces the optional single hero image.',
+    }),
     defineField({name: 'chooserEyebrow', title: 'Service chooser eyebrow', type: 'string', group: 'services', validation: (rule) => rule.max(80)}),
     defineField({name: 'chooserHeading', title: 'Service chooser heading', type: 'string', group: 'services', validation: (rule) => rule.max(100)}),
     defineField({name: 'chooserCopy', title: 'Service chooser supporting copy', type: 'text', rows: 3, group: 'services', validation: (rule) => rule.max(240)}),

@@ -1,7 +1,6 @@
 ---
-import type {CTA} from '@/types/content'
 import {sanityImageUrl} from '@/lib/images'
-import type {WorkImage} from '@/types/content'
+import type {CTA, HeroCollage, WorkImage} from '@/types/content'
 
 interface Props {
   eyebrow: string
@@ -12,12 +11,33 @@ interface Props {
   services?: string[]
   serviceArea?: string
   image?: WorkImage
+  collage?: HeroCollage
 }
 
-const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], serviceArea, image} = Astro.props
+const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], serviceArea, image, collage} = Astro.props
+const legacyImage = collage ? undefined : image
+
+type CollageSlot = {
+  role: 'event' | 'headshot' | 'portrait'
+  image: WorkImage
+  ratio: {width: number; height: number}
+  widths: number[]
+  sizes: string
+  priority: boolean
+}
+
+const collageSlots: CollageSlot[] = collage
+  ? [
+      {role: 'event', image: collage.event, ratio: {width: 4, height: 5}, widths: [480, 720, 960], sizes: '(min-width: 64rem) 24rem, 62vw', priority: true},
+      {role: 'headshot', image: collage.headshot, ratio: {width: 1, height: 1}, widths: [320, 480, 640], sizes: '(min-width: 64rem) 15rem, 34vw', priority: false},
+      {role: 'portrait', image: collage.portrait, ratio: {width: 1, height: 1}, widths: [320, 480, 640], sizes: '(min-width: 64rem) 15rem, 34vw', priority: false},
+    ]
+  : []
+
+const cropHeight = (slot: CollageSlot, width: number) => Math.round((width * slot.ratio.height) / slot.ratio.width)
 ---
 
-<section class:list={['hero', 'section-dark', image && 'hero-with-image']} aria-labelledby="hero-title">
+<section class:list={['hero', 'section-dark', (collage || legacyImage) && 'hero-with-image', collage && 'hero-with-collage']} aria-labelledby="hero-title">
   <div class="container hero-inner">
     <div class="hero-content">
       <p class="eyebrow">{eyebrow}</p>
@@ -30,13 +50,32 @@ const {eyebrow, headline, copy, primaryCta, secondaryCta, services = [], service
       </div>
       {serviceArea && <p class="hero-location">Serving {serviceArea}</p>}
     </div>
-    {image && (
+    {collage && (
+      <div class="hero-collage" role="group" aria-label="BASI photography across events, headshots, and portraits">
+        {collageSlots.map((slot) => (
+          <figure class:list={['hero-collage-item', `hero-collage-${slot.role}`]}>
+            <img
+              src={sanityImageUrl(slot.image, slot.widths[1], cropHeight(slot, slot.widths[1]), 84)}
+              srcset={slot.widths.map((width) => `${sanityImageUrl(slot.image, width, cropHeight(slot, width), 84)} ${width}w`).join(', ')}
+              sizes={slot.sizes}
+              alt={slot.image.alt}
+              width={slot.ratio.width * 200}
+              height={slot.ratio.height * 200}
+              loading="eager"
+              fetchpriority={slot.priority ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
+    )}
+    {legacyImage && (
       <figure class="hero-media">
         <img
-          src={sanityImageUrl(image, 720, 900, 86)}
-          srcset={`${sanityImageUrl(image, 480, 600, 84)} 480w, ${sanityImageUrl(image, 720, 900, 86)} 720w, ${sanityImageUrl(image, 960, 1200, 86)} 960w`}
+          src={sanityImageUrl(legacyImage, 720, 900, 86)}
+          srcset={`${sanityImageUrl(legacyImage, 480, 600, 84)} 480w, ${sanityImageUrl(legacyImage, 720, 900, 86)} 720w, ${sanityImageUrl(legacyImage, 960, 1200, 86)} 960w`}
           sizes="(max-width: 1023px) 100vw, 38vw"
-          alt={image.alt}
+          alt={legacyImage.alt}
           width="720"
           height="900"
           loading="eager"

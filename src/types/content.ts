@@ -7,6 +7,7 @@ export interface SiteSettings {
   siteTitle: string
   siteDescription: string
   primaryCta: CTA
+  contactDestination: string
   bookingDestination: string
   email: string
   phone?: string
@@ -25,6 +26,7 @@ export interface HomePage {
   primaryCta: CTA
   secondaryCta: CTA
   heroImage?: WorkImage
+  heroCollage?: HeroCollage
   chooserEyebrow: string
   chooserHeading: string
   chooserCopy: string
@@ -49,6 +51,12 @@ export interface HomePage {
   contactCopy: string
   seoTitle?: string
   seoDescription?: string
+}
+
+export interface HeroCollage {
+  event: WorkImage
+  headshot: WorkImage
+  portrait: WorkImage
 }
 
 export interface HomepageServiceCard {

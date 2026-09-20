@@ -10,6 +10,7 @@ export const siteSettingsType = defineType({
     instagramUrl: 'https://www.instagram.com/book.basi/',
     serviceArea: 'Metro Atlanta',
     bookingDestination: 'mailto:info@everythingbasi.com?subject=Book%20BASI%20Inquiry',
+    contactDestination: 'https://everythingbasi.com/contact/',
   },
   groups: [
     {name: 'identity', title: 'Identity', default: true},
@@ -29,6 +30,14 @@ export const siteSettingsType = defineType({
       group: 'contact',
       description: 'The default destination used by booking calls to action across the site.',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'contactDestination',
+      title: 'Contact destination',
+      type: 'string',
+      group: 'contact',
+      description: 'Where the header “Contact BASI” link sends visitors. Defaults to the EverythingBASI contact page when empty.',
+      validation: (rule) => rule.uri({scheme: ['https', 'mailto'], allowRelative: true}),
     }),
     defineField({name: 'email', title: 'Email', type: 'string', group: 'contact', validation: (rule) => rule.required().email()}),
     defineField({name: 'phone', title: 'Phone', type: 'string', group: 'contact'}),

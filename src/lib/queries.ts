@@ -3,6 +3,7 @@ export const settingsQuery = `*[_type == "siteSettings"][0]{
   siteDescription,
   "primaryCta": primaryCta{label, destination},
   bookingDestination,
+  contactDestination,
   email,
   phone,
   instagramUrl,
@@ -28,6 +29,11 @@ export const homeQuery = `*[_type == "homePage"][0]{
     "url": asset->url,
     "width": asset->metadata.dimensions.width,
     "height": asset->metadata.dimensions.height
+  },
+  "heroCollage": heroCollage{
+    "event": event{asset, crop, hotspot, alt, "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},
+    "headshot": headshot{asset, crop, hotspot, alt, "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height},
+    "portrait": portrait{asset, crop, hotspot, alt, "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height}
   },
   chooserEyebrow,
   chooserHeading,

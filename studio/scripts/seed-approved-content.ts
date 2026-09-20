@@ -15,10 +15,10 @@ if (config.projectId !== PROJECT_ID || config.dataset !== DATASET) {
 const bookingDestination = 'mailto:info@everythingbasi.com?subject=Book%20BASI%20Inquiry'
 
 const approvedServiceCards = [
-  {_key: 'event-coverage', _type: 'serviceCard', internalName: 'Event Coverage', title: 'Event Coverage', description: 'Capture the people, energy, and moments that make your event worth remembering.', ctaLabel: 'Explore Event Coverage', ctaUrl: 'https://everythingbasi.com/events/', isActive: true},
-  {_key: 'team-headshots', _type: 'serviceCard', internalName: 'Team Headshots', title: 'Team Headshots', description: 'Create a consistent, professional presence across your team.', ctaLabel: 'Explore Team Headshots', ctaUrl: 'https://everythingbasi.com/atlanta-business-headshots/', isActive: true},
-  {_key: 'personal-branding', _type: 'serviceCard', internalName: 'Personal Branding', title: 'Personal Branding', description: 'Build a versatile visual foundation for your business, content, and ideas.', ctaLabel: 'Explore Personal Branding', ctaUrl: 'https://everythingbasi.com/book/branding/', isActive: true},
-  {_key: 'portrait-sessions', _type: 'serviceCard', internalName: 'Portrait Sessions', title: 'Portrait Sessions', description: 'Create intentional portraits that feel polished, personal, and distinctly you.', ctaLabel: 'Explore Portrait Sessions', ctaUrl: 'https://everythingbasi.com/portraits/', isActive: true},
+  {_key: 'event-coverage', _type: 'serviceCard', internalName: 'Event Coverage', title: 'Event Coverage', description: 'Conferences, networking events, brand activations, celebrations, and community events captured with intention.', ctaLabel: 'Explore Event Coverage', ctaUrl: 'https://everythingbasi.com/events/', isActive: true},
+  {_key: 'team-headshots', _type: 'serviceCard', internalName: 'Team Headshots', title: 'Team Headshots', description: 'Consistent professional headshots for teams of 5+ with studio and on-location options.', ctaLabel: 'Explore Team Headshots', ctaUrl: 'https://everythingbasi.com/atlanta-business-headshots/', isActive: true},
+  {_key: 'personal-branding', _type: 'serviceCard', internalName: 'Personal Branding', title: 'Personal Branding', description: 'Strategic images for websites, campaigns, social content, and professional visibility.', ctaLabel: 'Explore Personal Branding', ctaUrl: 'https://everythingbasi.com/book/branding/', isActive: true},
+  {_key: 'portrait-sessions', _type: 'serviceCard', internalName: 'Portrait Sessions', title: 'Portrait Sessions', description: 'Individual headshots, studio portraits, and outdoor sessions created with a polished, intentional look.', ctaLabel: 'Explore Portrait Sessions', ctaUrl: 'https://everythingbasi.com/portraits/', isActive: true},
 ]
 
 const documents = [
@@ -28,8 +28,9 @@ const documents = [
     values: {
       siteTitle: 'Book BASI',
       siteDescription: 'Professional photography for events, teams, brands, and people in Metro Atlanta.',
-      primaryCta: {_type: 'callToAction', label: 'Book BASI', destination: '#services'},
+      primaryCta: {_type: 'callToAction', label: 'Choose Your Service', destination: '#services'},
       bookingDestination,
+      contactDestination: 'https://everythingbasi.com/contact/',
       email: 'info@everythingbasi.com',
       instagramUrl: 'https://www.instagram.com/book.basi/',
       serviceArea: 'Metro Atlanta',
@@ -45,8 +46,8 @@ const documents = [
     values: {
       eyebrow: 'The Foundation of Presence',
       headline: 'Make your presence visible.',
-      supportingCopy: 'Professional photography for events, teams, brands, and people.',
-      primaryCta: {_type: 'callToAction', label: 'Book BASI', destination: '#services'},
+      supportingCopy: 'Professional photography for Metro Atlanta events, teams, brands, and people.',
+      primaryCta: {_type: 'callToAction', label: 'Choose Your Service', destination: '#services'},
       secondaryCta: {_type: 'callToAction', label: 'View Work', destination: 'https://everythingbasi.com/portfolio/'},
       chooserEyebrow: 'START HERE',
       chooserHeading: 'How do you need to show up?',
@@ -58,7 +59,7 @@ const documents = [
       trustHeading: 'Why BASI',
       trustCopy: 'A professional experience built around clear communication, consistent imagery, and reliable delivery.',
       trustPoints: [
-        {_key: 'professional-process', _type: 'trustPoint', title: 'Professional process', description: 'Clear communication from inquiry through delivery.'},
+        {_key: 'professional-process', _type: 'trustPoint', title: 'Clear, professional process', description: 'Clear communication from inquiry through delivery.'},
         {_key: 'visual-consistency', _type: 'trustPoint', title: 'Consistent visual quality', description: 'Imagery designed to work together across your presence.'},
         {_key: 'real-world-use', _type: 'trustPoint', title: 'Built for real-world use', description: 'Photography created for websites, social, marketing, teams, press, and campaigns.'},
       ],
@@ -68,7 +69,7 @@ const documents = [
       workHeading: 'Selected work',
       workCopy: 'A focused look at BASI across events, teams, brands, and portraits.',
       closingHeading: 'Ready to build your presence?',
-      closingCopy: 'Choose the service that fits what you need.',
+      closingCopy: 'Choose the service that fits what you need. Not sure where to start? Tell us what you\'re planning.',
       closingCta: {_type: 'callToAction', label: 'Choose Your Service', destination: '#services'},
       contactHeading: 'Start the conversation.',
       contactCopy: 'Share the service, timing, and essential details for what you are planning.',

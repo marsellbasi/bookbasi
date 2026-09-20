@@ -315,6 +315,50 @@ h4 {
   font-size: var(--step--1);
 }
 
+.hero-with-collage .hero-inner::after {
+  display: none;
+}
+
+.hero-collage {
+  display: grid;
+  max-width: 38rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-2);
+  margin: var(--space-6) 0 0;
+}
+
+.hero-collage-item {
+  position: relative;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-dark-soft);
+}
+
+.hero-collage-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-collage-event {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  aspect-ratio: 4 / 5;
+}
+
+.hero-collage-headshot {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.hero-collage-portrait {
+  grid-column: 2;
+  grid-row: 2;
+}
+
 .hero-media {
   margin: var(--space-5) 0 0;
 }
@@ -728,11 +772,46 @@ h4 {
   }
 }
 
+.work-item-frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}
+
 .work-item img {
   width: 100%;
   height: auto;
   border-radius: var(--radius-sm);
   background: var(--color-dark-soft);
+}
+
+a.work-item-frame img {
+  transition: transform 220ms ease;
+}
+
+@media (hover: hover) {
+  a.work-item-frame:hover img,
+  a.work-item-frame:focus-visible img {
+    transform: scale(1.02);
+  }
+}
+
+.work-item-category {
+  position: absolute;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: rgb(11 11 11 / 62%);
+  color: #e4e2dc;
+  font-size: 0.64rem;
+  font-weight: 720;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
 }
 
 .work-item figcaption {
@@ -842,7 +921,21 @@ h4 {
 .cta-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: var(--space-2);
+}
+
+.cta-secondary-group {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.cta-microcopy {
+  margin: 0;
+  color: rgb(11 11 11 / 68%);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
 }
 
 .conversion-meta {
@@ -1069,10 +1162,17 @@ h4 {
 
   .hero-with-image .hero-inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.72fr);
+    grid-template-columns: minmax(0, 0.48fr) minmax(0, 0.52fr);
     align-items: center;
-    gap: var(--space-7);
+    gap: var(--space-6);
     padding-block: 3.75rem;
+  }
+
+  .hero-collage {
+    max-width: none;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    align-self: center;
+    margin: 0;
   }
 
   .hero-media {

@@ -16,6 +16,7 @@
     "sanity:seed": "cd studio && sanity exec scripts/seed-approved-content.ts --with-user-token --",
     "sanity:migrate-service-cards": "cd studio && sanity exec scripts/migrate-home-service-cards.ts --with-user-token --",
     "sanity:publish-work": "cd studio && sanity exec scripts/publish-selected-work.ts --with-user-token --",
+    "sanity:publish-hero": "cd studio && sanity exec scripts/publish-hero-images.ts --with-user-token --",
     "studio:deploy": "cd studio && sanity deploy"
   },
   "dependencies": {

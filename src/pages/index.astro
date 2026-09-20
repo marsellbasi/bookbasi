@@ -33,6 +33,7 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
     services={serviceNames}
     serviceArea={settings.serviceArea}
     image={home.heroImage}
+    collage={home.heroCollage}
   />
 
   <ActionList
@@ -48,6 +49,7 @@ const serviceNames = ['Events', 'Headshots', 'Branding', 'Portraits']
       heading={home.workHeading}
       copy={home.workCopy}
       images={home.selectedWork}
+      serviceCards={home.serviceCards}
       instagramUrl={settings.instagramUrl}
       portfolioUrl={portfolioAction?.url || 'https://everythingbasi.com/portfolio/'}
     />

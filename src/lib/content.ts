@@ -2,7 +2,7 @@ import {sanityClient} from 'sanity:client'
 import {fallbackActions, fallbackHome, fallbackServices, fallbackSettings} from '@/data/fallback'
 import {actionsQuery, homeQuery, servicesQuery, settingsQuery, testimonialsQuery} from '@/lib/queries'
 import {getVisibleServiceCards} from '@/lib/serviceCards'
-import type {HomePage, LinkAction, Service, SiteSettings, Testimonial} from '@/types/content'
+import type {HeroCollage, HomePage, LinkAction, Service, SiteSettings, Testimonial, WorkImage} from '@/types/content'
 
 async function fetchOrFallback<T>(query: string, fallback: T): Promise<T> {
   try {
@@ -25,6 +25,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     instagramUrl: value.instagramUrl || fallbackSettings.instagramUrl,
     serviceArea: value.serviceArea || fallbackSettings.serviceArea,
     bookingDestination,
+    contactDestination: normalizeDestination(value.contactDestination || fallbackSettings.contactDestination),
     primaryCta: {
       ...fallbackSettings.primaryCta,
       ...value.primaryCta,
@@ -42,6 +43,7 @@ export async function getHomePage(): Promise<HomePage> {
     secondaryCta: {...fallbackHome.secondaryCta, ...value.secondaryCta, destination: normalizeDestination(value.secondaryCta?.destination || fallbackHome.secondaryCta.destination)},
     closingCta: {...fallbackHome.closingCta, ...value.closingCta, destination: normalizeDestination(value.closingCta?.destination || fallbackHome.closingCta.destination)},
     heroImage: value.heroImage?.url && value.heroImage.alt ? value.heroImage : undefined,
+    heroCollage: resolveHeroCollage(value.heroCollage),
     showWork: value.showWork ?? fallbackHome.showWork,
     showTrust: value.showTrust ?? fallbackHome.showTrust,
     showTestimonials: value.showTestimonials ?? fallbackHome.showTestimonials,
@@ -86,6 +88,12 @@ export async function getActions(): Promise<LinkAction[]> {
 
 export function getTestimonials() {
   return fetchOrFallback<Testimonial[]>(testimonialsQuery, [])
+}
+
+function resolveHeroCollage(collage: Partial<HeroCollage> | undefined | null): HeroCollage | undefined {
+  const isPublishedImage = (image: WorkImage | undefined): image is WorkImage => Boolean(image?.url && image.alt)
+  if (!collage || !isPublishedImage(collage.event) || !isPublishedImage(collage.headshot) || !isPublishedImage(collage.portrait)) return undefined
+  return {event: collage.event, headshot: collage.headshot, portrait: collage.portrait}
 }
 
 function normalizeDestination(destination: string) {
