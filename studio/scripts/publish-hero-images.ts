@@ -8,6 +8,8 @@ const DATASET = 'production'
 const API_VERSION = '2026-08-01'
 const HOME_PAGE_ID = 'homePage'
 const dryRun = process.argv.includes('--dry-run')
+const onlyIndex = process.argv.indexOf('--only')
+const onlyRole = onlyIndex === -1 ? undefined : process.argv[onlyIndex + 1]
 const imageDirectory = resolve(process.cwd(), '..', 'images', 'hero')
 const extensions = ['.jpg', '.jpeg', '.png', '.webp']
 const contentTypes: Record<string, string> = {'.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp'}
@@ -36,11 +38,11 @@ const hero: HeroDefinition[] = [
   },
   {
     role: 'portrait',
-    basename: 'hero-portrait',
-    alt: 'Studio portrait of a woman in a green dress seated on a white pedestal against a coral backdrop',
-    hotspot: {x: 0.44, y: 0.4, width: 0.56, height: 0.5},
-    // Full-body source; the authored crop keeps the face legible in the square collage slot.
-    crop: {top: 0.08, right: 0.12, bottom: 0.22, left: 0.12},
+    basename: 'hero-portrait2',
+    alt: 'Studio portrait of a woman kneeling against a white backdrop, one hand raised into her hair, wearing a navy print bodysuit and layered gold necklaces',
+    hotspot: {x: 0.42, y: 0.22, width: 0.4, height: 0.3},
+    // Full-body source; the authored crop frames head to waist and keeps both hands inside the square collage slot.
+    crop: {top: 0.03, right: 0.05, bottom: 0.37, left: 0.05},
   },
 ]
 
@@ -55,12 +57,19 @@ const canonicalHomeExists = await client.fetch<boolean>('defined(*[_id == $id][0
 if (!canonicalHomeExists) throw new Error(`Canonical Home Page document ${HOME_PAGE_ID} does not exist.`)
 
 const resolveFile = (basename: string) => {
-  const match = extensions.map((extension) => resolve(imageDirectory, `${basename}${extension}`)).find((path) => existsSync(path))
+  const candidates = extensions.flatMap((extension) => [extension, extension.toUpperCase()]).map((extension) => resolve(imageDirectory, `${basename}${extension}`))
+  const match = candidates.find((path) => existsSync(path))
   if (!match) throw new Error(`Missing approved hero image: ${resolve(imageDirectory, basename)}.{${extensions.map((e) => e.slice(1)).join(',')}}`)
   return match
 }
 
-const files = hero.map((item) => {
+if (onlyRole && !hero.some((item) => item.role === onlyRole)) {
+  throw new Error(`Unknown hero slot "${onlyRole}". Use --only event | headshot | portrait.`)
+}
+
+const selected = onlyRole ? hero.filter((item) => item.role === onlyRole) : hero
+
+const files = selected.map((item) => {
   if (!item.alt.trim()) throw new Error(`Alt text is required for the ${item.role} hero image before publishing.`)
   return {...item, filePath: resolveFile(item.basename)}
 })
@@ -100,11 +109,11 @@ if (dryRun) {
     '*[_id == $id][0].heroCollage{"event": event{alt, "assetId": asset._ref}, "headshot": headshot{alt, "assetId": asset._ref}, "portrait": portrait{alt, "assetId": asset._ref}}',
     {id: HOME_PAGE_ID},
   )
-  console.log(`Dry run: ${assets.length} of ${hero.length} assets already exist. Current hero collage: ${JSON.stringify(current)}`)
+  console.log(`Dry run: ${assets.length} of ${selected.length} selected assets already exist. Would ${onlyRole ? `patch heroCollage.${onlyRole} only` : 'replace the whole heroCollage object'}. Current hero collage: ${JSON.stringify(current)}`)
 } else {
-  if (assets.length !== hero.length) throw new Error(`Expected ${hero.length} assets; resolved ${assets.length}.`)
+  if (assets.length !== selected.length) throw new Error(`Expected ${selected.length} assets; resolved ${assets.length}.`)
 
-  const heroCollage = Object.fromEntries(
+  const slots = Object.fromEntries(
     files.map((item, index) => [
       item.role,
       {
@@ -117,6 +126,11 @@ if (dryRun) {
     ]),
   )
 
-  await client.patch(HOME_PAGE_ID).set({heroCollage: {_type: 'heroCollage', ...heroCollage}}).commit()
-  console.log(`Published the three-image hero collage to ${PROJECT_ID}/${DATASET}.`)
+  if (onlyRole) {
+    await client.patch(HOME_PAGE_ID).setIfMissing({heroCollage: {_type: 'heroCollage'}}).set({[`heroCollage.${onlyRole}`]: slots[onlyRole]}).commit()
+    console.log(`Replaced the ${onlyRole} hero image in ${PROJECT_ID}/${DATASET}; other slots untouched.`)
+  } else {
+    await client.patch(HOME_PAGE_ID).set({heroCollage: {_type: 'heroCollage', ...slots}}).commit()
+    console.log(`Published the three-image hero collage to ${PROJECT_ID}/${DATASET}.`)
+  }
 }
