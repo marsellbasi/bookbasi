@@ -1,0 +1,108 @@
+---
+import type {HomepageServiceCard} from '@/types/content'
+
+interface Props {
+  card: HomepageServiceCard
+}
+
+const {card} = Astro.props
+const triggerId = `portrait-selector-trigger-${card._key}`
+const menuId = `portrait-selector-menu-${card._key}`
+const triggerLabel = card.ctaLabel === 'Explore Portrait Sessions' ? 'Choose Portrait Session' : card.ctaLabel
+const portraitOptions = [
+  {label: 'Professional Headshots', url: 'https://everythingbasi.com/book/headshots/'},
+  {label: 'Studio Portraits', url: 'https://everythingbasi.com/book/studio/'},
+  {label: 'Outdoor Portraits', url: 'https://everythingbasi.com/book/outdoor/'},
+  {label: 'View All Portrait Sessions', url: card.ctaUrl},
+]
+---
+
+<article
+  class="action-link action-secondary portrait-selector"
+  data-action={card._key}
+  data-portrait-selector
+>
+  <span class="action-copy">
+    <strong>{card.title}</strong>
+    <small>{card.description}</small>
+  </span>
+
+  <div class="portrait-selector-controls">
+    <button
+      class="action-cta portrait-selector-trigger"
+      id={triggerId}
+      type="button"
+      aria-expanded="false"
+      aria-controls={menuId}
+    >
+      {triggerLabel}
+      <span class="action-arrow" aria-hidden="true">↓</span>
+    </button>
+
+    <div
+      class="portrait-selector-menu"
+      id={menuId}
+      role="group"
+      aria-labelledby={triggerId}
+      hidden
+    >
+      {portraitOptions.map((option) => (
+        <a href={option.url}>{option.label}</a>
+      ))}
+    </div>
+  </div>
+</article>
+
+<script>
+  const closePortraitSelector = (selector: HTMLElement, returnFocus = false) => {
+    const trigger = selector.querySelector<HTMLButtonElement>('.portrait-selector-trigger')
+    const menu = selector.querySelector<HTMLElement>('.portrait-selector-menu')
+    if (!trigger || !menu) return
+
+    trigger.setAttribute('aria-expanded', 'false')
+    menu.hidden = true
+    selector.classList.remove('is-open')
+    if (returnFocus) trigger.focus()
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-portrait-selector]').forEach((selector) => {
+    const trigger = selector.querySelector<HTMLButtonElement>('.portrait-selector-trigger')
+    const menu = selector.querySelector<HTMLElement>('.portrait-selector-menu')
+    if (!trigger || !menu) return
+
+    const togglePortraitSelector = () => {
+      const willOpen = trigger.getAttribute('aria-expanded') !== 'true'
+
+      document.querySelectorAll<HTMLElement>('[data-portrait-selector]').forEach((otherSelector) => {
+        if (otherSelector !== selector) closePortraitSelector(otherSelector)
+      })
+
+      trigger.setAttribute('aria-expanded', String(willOpen))
+      menu.hidden = !willOpen
+      selector.classList.toggle('is-open', willOpen)
+    }
+
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation()
+      togglePortraitSelector()
+    })
+
+    selector.addEventListener('click', (event) => {
+      const target = event.target
+      if (!(target instanceof Element) || target.closest('button, a, .portrait-selector-menu')) return
+      togglePortraitSelector()
+    })
+
+    document.addEventListener('click', (event) => {
+      if (trigger.getAttribute('aria-expanded') === 'true' && !selector.contains(event.target as Node)) {
+        closePortraitSelector(selector)
+      }
+    })
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        closePortraitSelector(selector, true)
+      }
+    })
+  })
+</script>
