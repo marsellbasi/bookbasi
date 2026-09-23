@@ -21,6 +21,7 @@ export interface SiteSettings {
 }
 
 export interface SiteAnnouncement {
+  accent?: string
   label?: string
   message: string
   supportingText?: string

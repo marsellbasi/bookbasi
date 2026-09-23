@@ -46,6 +46,14 @@ test('omits the link when the CTA is missing or unsafe', () => {
   assert.equal(resolveAnnouncement({...campaign, ctaUrl: '/privacy'})?.cta?.url, '/privacy')
 })
 
+test('separates a leading emoji into a decorative accent', () => {
+  const resolved = resolveAnnouncement({...campaign, label: '🦇 BASI SPOOKY SEASON'})
+  assert.equal(resolved?.accent, '🦇')
+  assert.equal(resolved?.label, 'BASI SPOOKY SEASON')
+  assert.equal(resolveAnnouncement(campaign)?.accent, undefined)
+  assert.equal(resolveAnnouncement({...campaign, label: '🦇'})?.label, undefined)
+})
+
 test('constrains theme to gold or dark', () => {
   assert.equal(resolveAnnouncement({...campaign, theme: 'dark'})?.theme, 'dark')
   assert.equal(resolveAnnouncement({...campaign, theme: 'neon'})?.theme, 'gold')

@@ -13,6 +13,8 @@ export interface AnnouncementInput {
 
 const text = (value: unknown) => (typeof value === 'string' ? value.trim() : '')
 
+const leadingEmoji = /^(\p{Extended_Pictographic}️?(?:‍\p{Extended_Pictographic}️?)*)\s*(.*)$/u
+
 function isSafeUrl(url: string) {
   if (/^\/(?!\/)/.test(url) || url.startsWith('#')) return true
   try {
@@ -31,9 +33,12 @@ export function resolveAnnouncement(input: AnnouncementInput | null | undefined)
 
   const ctaLabel = text(input.ctaLabel)
   const ctaUrl = text(input.ctaUrl)
+  // A leading emoji in the label renders as a separate decorative accent.
+  const [, accent, label] = text(input.label).match(leadingEmoji) ?? [, '', text(input.label)]
 
   return {
-    label: text(input.label) || undefined,
+    ...(accent ? {accent} : {}),
+    label: label || undefined,
     message,
     supportingText: text(input.supportingText) || undefined,
     cta: ctaLabel && ctaUrl && isSafeUrl(ctaUrl) ? {label: ctaLabel, url: ctaUrl, openInNewTab: input.openInNewTab === true} : undefined,

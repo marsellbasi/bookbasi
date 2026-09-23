@@ -6,12 +6,12 @@ interface Props {
 }
 
 const {announcement} = Astro.props
-const {label, message, supportingText, cta, theme} = announcement
+const {accent, label, message, supportingText, cta, theme} = announcement
 ---
 
 <aside class:list={['site-announcement', `site-announcement-${theme}`, {'has-label': label}]} aria-label="Announcement">
   <div class="container announcement-inner">
-    {label && <p class="announcement-label">{label}</p>}
+    {label && <p class="announcement-label">{accent && <span class="announcement-accent" aria-hidden="true">{accent}</span>}{label}</p>}
     <p class="announcement-message">{message}</p>
     {supportingText && <p class="announcement-support">{supportingText}</p>}
     {cta && (

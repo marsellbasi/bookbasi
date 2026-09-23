@@ -312,6 +312,13 @@ h4 {
   text-transform: uppercase;
 }
 
+.announcement-accent {
+  margin-right: 0.45em;
+  font-size: 1.2em;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
 .announcement-message {
   grid-area: message;
   font-size: 0.9rem;
