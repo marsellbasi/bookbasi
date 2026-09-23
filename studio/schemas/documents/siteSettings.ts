@@ -16,6 +16,7 @@ export const siteSettingsType = defineType({
     {name: 'identity', title: 'Identity', default: true},
     {name: 'contact', title: 'Contact'},
     {name: 'seo', title: 'SEO'},
+    {name: 'announcement', title: 'Announcement'},
   ],
   fields: [
     defineField({name: 'siteTitle', title: 'Site title', type: 'string', group: 'identity', validation: (rule) => rule.required()}),
@@ -47,6 +48,7 @@ export const siteSettingsType = defineType({
     defineField({name: 'defaultSeoTitle', title: 'Default SEO title', type: 'string', group: 'seo', validation: (rule) => rule.required().max(70)}),
     defineField({name: 'defaultSeoDescription', title: 'Default SEO description', type: 'text', rows: 3, group: 'seo', validation: (rule) => rule.required().max(170)}),
     defineField({name: 'socialImage', title: 'Default social image', type: 'imageWithAlt', group: 'seo'}),
+    defineField({name: 'announcement', title: 'Site announcement', type: 'siteAnnouncement', group: 'announcement'}),
   ],
   preview: {prepare: () => ({title: 'Site Settings'})},
 })

@@ -11,7 +11,8 @@ export const settingsQuery = `*[_type == "siteSettings"][0]{
   footerText,
   defaultSeoTitle,
   defaultSeoDescription,
-  "socialImageUrl": socialImage.asset->url
+  "socialImageUrl": socialImage.asset->url,
+  "announcement": announcement{enabled, label, message, supportingText, ctaLabel, ctaUrl, openInNewTab, theme}
 }`
 
 export const homeQuery = `*[_type == "homePage"][0]{

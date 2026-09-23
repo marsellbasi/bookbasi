@@ -114,6 +114,12 @@ Run `npm run sanity:seed -- --dry-run` first to verify targeting. Repeated runs 
 6. Publish reviewed content.
 7. Publish approved changes. The existing Sanity-to-Cloudflare webhook triggers a new public production build automatically.
 
+### Site announcement
+
+**Site Settings → Announcement** controls a slim sitewide campaign band rendered directly below the header on every route (`src/components/SiteAnnouncement.astro`, resolved by `src/lib/announcement.ts`). Fields: Enabled, Campaign label, Headline / message, optional Supporting text, CTA label, CTA URL, Open in new tab, and Style (Gold or Dark).
+
+Toggle **Enabled** and publish; the existing webhook rebuilds the site, and the change is live once that Cloudflare Pages deploy finishes. When disabled, or when the message is missing or Sanity is unreachable at build time, no announcement markup is emitted at all. A missing or non-HTTPS CTA URL omits the link rather than rendering a broken one. Run `npm test` for the resolver's focused tests.
+
 Published Home Page service cards and utility Link / Action documents override their reviewed build-failure fallbacks. The centralized booking fallback and Service-specific overrides remain available for future booking integration, but detailed pricing and policy content is intentionally not rendered on BookBASI.com; EverythingBASI is the canonical detailed service destination. See `BOOKBASI_SANITY_SERVICE_CARD_MANAGEMENT.md` for the complete editorial and implementation workflow.
 
 ## Cloudflare Pages

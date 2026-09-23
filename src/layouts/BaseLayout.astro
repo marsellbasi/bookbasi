@@ -1,5 +1,6 @@
 ---
 import SEO from '@/components/SEO.astro'
+import SiteAnnouncement from '@/components/SiteAnnouncement.astro'
 import SiteFooter from '@/components/SiteFooter.astro'
 import SiteHeader from '@/components/SiteHeader.astro'
 import socialImageFallback from '@/assets/brand/basi-logo-black-background.png'
@@ -60,6 +61,7 @@ const structuredData = {
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <SiteHeader {settings} />
+    {settings.announcement && <SiteAnnouncement announcement={settings.announcement} />}
     <main id="main-content"><slot /></main>
     <SiteFooter {settings} />
   </body>

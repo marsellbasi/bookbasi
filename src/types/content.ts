@@ -17,6 +17,15 @@ export interface SiteSettings {
   defaultSeoTitle: string
   defaultSeoDescription: string
   socialImageUrl?: string
+  announcement?: SiteAnnouncement
+}
+
+export interface SiteAnnouncement {
+  label?: string
+  message: string
+  supportingText?: string
+  cta?: {label: string; url: string; openInNewTab: boolean}
+  theme: 'gold' | 'dark'
 }
 
 export interface HomePage {

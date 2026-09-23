@@ -1,0 +1,31 @@
+---
+import type {SiteAnnouncement} from '@/types/content'
+
+interface Props {
+  announcement: SiteAnnouncement
+}
+
+const {announcement} = Astro.props
+const {label, message, supportingText, cta, theme} = announcement
+---
+
+<aside class:list={['site-announcement', `site-announcement-${theme}`, {'has-label': label}]} aria-label="Announcement">
+  <div class="container announcement-inner">
+    {label && <p class="announcement-label">{label}</p>}
+    <p class="announcement-message">{message}</p>
+    {supportingText && <p class="announcement-support">{supportingText}</p>}
+    {cta && (
+      <a
+        class="announcement-cta"
+        href={cta.url}
+        target={cta.openInNewTab ? '_blank' : undefined}
+        rel={cta.openInNewTab ? 'noopener' : undefined}
+        data-action="announcement"
+      >
+        <span class="announcement-cta-label">{cta.label}</span>
+        <span class="visually-hidden">: {label || message}{cta.openInNewTab && ' (opens in a new tab)'}</span>
+        <span class="announcement-arrow" aria-hidden="true">→</span>
+      </a>
+    )}
+  </div>
+</aside>

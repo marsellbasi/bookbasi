@@ -9,6 +9,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "node --test \"src/**/*.test.ts\"",
     "studio:dev": "cd studio && sanity dev",
     "studio:build": "cd studio && sanity build dist --yes && sanity manifest extract --path dist/static && node scripts/prepare-cloudflare-output.mjs",
     "studio:validate": "cd studio && sanity schema validate",

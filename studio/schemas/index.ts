@@ -3,6 +3,7 @@ import {heroCollageType} from './objects/heroCollage'
 import {imageWithAltType} from './objects/imageWithAlt'
 import {seoType} from './objects/seo'
 import {serviceCardType} from './objects/serviceCard'
+import {siteAnnouncementType} from './objects/siteAnnouncement'
 import {trustPointType} from './objects/trustPoint'
 import {faqType} from './documents/faq'
 import {homePageType} from './documents/homePage'
@@ -17,6 +18,7 @@ export const schemaTypes = [
   imageWithAltType,
   seoType,
   serviceCardType,
+  siteAnnouncementType,
   trustPointType,
   siteSettingsType,
   homePageType,

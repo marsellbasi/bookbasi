@@ -1,5 +1,6 @@
 import {sanityClient} from 'sanity:client'
 import {fallbackActions, fallbackHome, fallbackServices, fallbackSettings} from '@/data/fallback'
+import {resolveAnnouncement, type AnnouncementInput} from '@/lib/announcement'
 import {actionsQuery, homeQuery, servicesQuery, settingsQuery, testimonialsQuery} from '@/lib/queries'
 import {getVisibleServiceCards} from '@/lib/serviceCards'
 import type {HeroCollage, HomePage, LinkAction, Service, SiteSettings, Testimonial, WorkImage} from '@/types/content'
@@ -17,11 +18,12 @@ async function fetchOrFallback<T>(query: string, fallback: T): Promise<T> {
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  const value = await fetchOrFallback<Partial<SiteSettings>>(settingsQuery, {})
+  const value = await fetchOrFallback<Partial<Omit<SiteSettings, 'announcement'>> & {announcement?: AnnouncementInput | null}>(settingsQuery, {})
   const bookingDestination = normalizeDestination(value.bookingDestination || fallbackSettings.bookingDestination)
   return {
     ...fallbackSettings,
     ...value,
+    announcement: resolveAnnouncement(value.announcement),
     instagramUrl: value.instagramUrl || fallbackSettings.instagramUrl,
     serviceArea: value.serviceArea || fallbackSettings.serviceArea,
     bookingDestination,
